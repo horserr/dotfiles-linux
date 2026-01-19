@@ -1,0 +1,34 @@
+[core]
+	editor = \"O:\\Programs\\Microsoft VS Code\\bin\\code\" --wait
+[user]
+	name = horserr
+	email = 112157036+horserr@users.noreply.github.com
+[alias]
+	st = status --short
+	l = log --oneline
+	b = branch
+	ck = checkout
+	no-edit = commit --amend --no-edit
+	d = difftool --dir-diff
+[credential "https://git.nju.edu.cn"]
+	provider = generic
+[credential]
+	helper = wincred
+[diff]
+	tool = vscode
+[difftool "vscode"]
+	cmd = code --wait --diff $LOCAL $REMOTE --new-window
+[merge]
+	tool = vscode
+[mergetool "vscode"]
+	cmd = code --wait $MERGED --new-window
+[difftool]
+	prompt = false
+[credential "http://172.29.7.152:8081"]
+	provider = generic
+[init]
+	defaultBranch = main
+[http]
+	proxy = http://localhost:7897
+[https]
+	proxy = http://localhost:7897

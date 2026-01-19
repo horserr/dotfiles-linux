@@ -1,0 +1,104 @@
+"https://github.com/JetBrains/ideavim
+set clipboard+=unnamed
+set clipboard+=ideaput
+let mapleader=","
+set noerrorbells
+set visualbell
+set incsearch
+
+""" Plugins  --------------------------------
+set exchange
+set surround
+set multiple-cursors
+set commentary
+set argtextobj
+set easymotion
+set ReplaceWithRegister
+set NERDTree
+set highlightedyank
+set functiontextobj
+" set keep-english-in-normal
+nmap s <Plug>(easymotion-s)
+
+""" IDEA specific settings
+if has('ide')
+  set ideajoin
+  " set ideastatusicon=gray
+  nmap ge <Action>(GotoNextError)
+  
+  nmap <leader>r <Action>(Run)
+  nmap <leader>d <Action>(Debug)
+  nmap <leader>e <Action>(RenameElement)
+  nmap <leader>b <Action>(ToggleLineBreakpoint)
+  nmap <leader>o <Action>(FileStructurePopup)
+  nmap <leader>z <Action>(ToggleDistractionFreeMode)
+  nmap <leader><leader>r <Action>(editRunConfigurations)
+  nmap <leader>E <Action>(Refactorings.QuickListPopupAction)
+  vmap <leader>E <Action>(Refactorings.QuickListPopupAction)
+
+  map <leader>a <Action>(Annotate)
+  map <leader>h <Action>(Vcs.ShowTabbedFileHistory)
+
+  nmap <space>f <Action>(GotoFile)
+  nmap <space>a <Action>(GotoAction)
+  nmap <space>s <Action>(GotoSymbol)
+  nmap <space>r <Action>(RecentFiles)
+  nmap <space>l <Action>(ReformatCode)
+  nmap <space>q <Action>(CloseContent)
+  nmap <space>t <Action>(ReopenClosedTab)
+  nmap <space>l <Action>(ReformatCode)
+  nmap <space>x <Action>(SelectInProjectView)
+  nmap <space>w <Action>(CloseAllEditorsButActive)
+
+  sethandler <C-k> n:ide
+  sethandler <C-v> i-v:ide
+  sethandler <C-x> v:ide
+  sethandler <C-a> i-v:ide
+  sethandler <C-f> n-v:ide
+  sethandler <C-w> i:ide
+  sethandler <C-n> n:ide
+  sethandler <C-S-o> n:ide
+  imap <C-S-o> <Action>(EditorCompleteStatement)
+  
+  if &ide =~? 'intellij idea'
+    if &ide =~? 'community'
+      " some mappings and options for IntelliJ IDEA Community Edition
+    elseif &ide =~? 'ultimate'
+      " some mappings and options for IntelliJ IDEA Ultimate Edition
+    endif
+  elseif &ide =~? 'pycharm'
+    " PyCharm specific mappings and options
+  endif
+else
+  set showmode
+  set incsearch
+  set scrolloff=5
+  set number relativenumber
+  " some mappings for Vim/Neovim
+  nnoremap <leader>f <cmd>Telescope find_files<cr>
+endif
+
+
+""" Plugin settings -------------------------
+let g:argtextobj_pairs="[:],(:),<:>"
+
+" <C-n> seems to me as a better solution than <M-n>,
+" but we should finally support vim-visual-multi because vim-multiple-cursors is deprecated now
+map <C-n> <Plug>NextWholeOccurrence
+
+""" My Mappings -----------------------------
+" Reformat the current line only
+" Toggle case and start typing. E.g. `<leader>iget`: `property` -> `getProperty`
+map <leader>i ~hi
+" Remove selection and toggle case. E.g. `v2l<leader>u`: `getProperty` -> `property`
+vmap <leader>u d~h
+
+" I think it's a better solution
+" map U <C-R>
+" .ideavimrc is a configuration file for IdeaVim plugin. It uses
+"   the same commands as the original .vimrc configuration.
+" You can find a list of commands here: https://jb.gg/h38q75
+" Find more examples here: https://jb.gg/share-ideavimrc
+
+" Don't use Ex mode, use Q for formatting.
+map Q gq

@@ -1,0 +1,171 @@
+{
+  "$schema": "https://aka.ms/winget-packages.schema.2.0.json",
+  "CreationDate": "2026-01-16T15:25:12.252-00:00",
+  "Sources": [
+    {
+      "Packages": [
+        {
+          "PackageIdentifier": "GitHub.cli"
+        },
+        {
+          "PackageIdentifier": "ClashVergeRev.ClashVergeRev"
+        },
+        {
+          "PackageIdentifier": "HermannSchinagl.LinkShellExtension"
+        },
+        {
+          "PackageIdentifier": "yt-dlp.yt-dlp"
+        },
+        {
+          "PackageIdentifier": "aria2.aria2"
+        },
+        {
+          "PackageIdentifier": "TorProject.TorBrowser"
+        },
+        {
+          "PackageIdentifier": "RevoUninstaller.RevoUninstaller"
+        },
+        {
+          "PackageIdentifier": "vinaypamnani.WMIExplorer"
+        },
+        {
+          "PackageIdentifier": "mgth.LittleBigMouse"
+        },
+        {
+          "PackageIdentifier": "MartiCliment.UniGetUI"
+        },
+        {
+          "PackageIdentifier": "Microsoft.PowerShell.Preview"
+        },
+        {
+          "PackageIdentifier": "voidtools.Everything.Alpha"
+        },
+        {
+          "PackageIdentifier": "Git.Git"
+        },
+        {
+          "PackageIdentifier": "Daum.PotPlayer"
+        },
+        {
+          "PackageIdentifier": "AntibodySoftware.WizTree"
+        },
+        {
+          "PackageIdentifier": "DigitalScholar.Zotero"
+        },
+        {
+          "PackageIdentifier": "7zip.7zip"
+        },
+        {
+          "PackageIdentifier": "RaspberryPiFoundation.RaspberryPiImager"
+        },
+        {
+          "PackageIdentifier": "Logitech.GHUB"
+        },
+        {
+          "PackageIdentifier": "Tailscale.Tailscale"
+        },
+        {
+          "PackageIdentifier": "JohnMacFarlane.Pandoc"
+        },
+        {
+          "PackageIdentifier": "QL-Win.QuickLook"
+        },
+        {
+          "PackageIdentifier": "Logitech.OptionsPlus"
+        },
+        {
+          "PackageIdentifier": "JanDeDobbeleer.OhMyPosh"
+        },
+        {
+          "PackageIdentifier": "dorssel.usbipd-win"
+        },
+        {
+          "PackageIdentifier": "Neovim.Neovim"
+        },
+        {
+          "PackageIdentifier": "Insecure.Nmap"
+        },
+        {
+          "PackageIdentifier": "Tencent.QQ.NT"
+        },
+        {
+          "PackageIdentifier": "Tencent.QQMusic"
+        },
+        {
+          "PackageIdentifier": "Tencent.WeChat.Universal"
+        },
+        {
+          "PackageIdentifier": "WiresharkFoundation.Wireshark"
+        },
+        {
+          "PackageIdentifier": "AutoHotkey.AutoHotkey"
+        },
+        {
+          "PackageIdentifier": "FujiApple.Trippy"
+        },
+        {
+          "PackageIdentifier": "Gyan.FFmpeg"
+        },
+        {
+          "PackageIdentifier": "JesseDuffield.Lazydocker"
+        },
+        {
+          "PackageIdentifier": "JesseDuffield.lazygit"
+        },
+        {
+          "PackageIdentifier": "NSSM.NSSM"
+        },
+        {
+          "PackageIdentifier": "Zoom.Zoom.EXE"
+        },
+        {
+          "PackageIdentifier": "ajeetdsouza.zoxide"
+        },
+        {
+          "PackageIdentifier": "aloneguid.bt"
+        },
+        {
+          "PackageIdentifier": "ar51an.iPerf3"
+        },
+        {
+          "PackageIdentifier": "astral-sh.uv"
+        },
+        {
+          "PackageIdentifier": "junegunn.fzf"
+        },
+        {
+          "PackageIdentifier": "sharkdp.bat"
+        },
+        {
+          "PackageIdentifier": "Microsoft.VisualStudioCode"
+        },
+        {
+          "PackageIdentifier": "Microsoft.WindowsTerminal.Preview"
+        },
+        {
+          "PackageIdentifier": "Ventoy.Ventoy"
+        }
+      ],
+      "SourceDetails": {
+        "Argument": "https://cdn.winget.microsoft.com/cache",
+        "Identifier": "Microsoft.Winget.Source_8wekyb3d8bbwe",
+        "Name": "winget",
+        "Type": "Microsoft.PreIndexed.Package"
+      }
+    },
+    {
+      "Packages": [
+        {
+          "PackageIdentifier": "XPFFH613W8V6LV"
+        }
+      ],
+      "SourceDetails": {
+        "Argument": "https://storeedgefd.dsx.mp.microsoft.com/v9.0",
+        "Identifier": "StoreEdgeFD",
+        "Name": "msstore",
+        "Type": "Microsoft.Rest"
+      }
+    }
+  ],
+  "WinGetVersion": "1.12.440"
+}
