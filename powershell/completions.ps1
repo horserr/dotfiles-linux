@@ -54,9 +54,14 @@ function Import-Completion {
 
 # 在 Profile 最后添加
 $PostStartTask = {
-  # 这里的代码会在 Shell 启动后执行，不会阻塞你看到提示符的速度
-  # 1. 稍微等待，确保用户已经看到提示符并可以开始输入
-  Start-Sleep -Milliseconds 300
+  # zoxide
+  $ZoxideCache = "$global:PS_CACHE_ROOT/zoxide_init.ps1"
+  if (!(Test-Path $ZoxideCache)) {
+    if (Get-Command zoxide -ErrorAction SilentlyContinue) {
+      zoxide init powershell | Out-File $ZoxideCache
+    }
+  }
+  if (Test-Path $ZoxideCache) { . $ZoxideCache }
 
   # 2. 静默加载模块，不输出任何内容
   # no need to import posh-git
@@ -68,21 +73,12 @@ $PostStartTask = {
   }
 
   Import-Completion -CmdName "uv" -ArgsList $Completions.uv
-  # fixme dont know why
-  # Import-Completion -CmdName "gh" -ArgsList $Completions.gh
-  gh completion -s powershell | Out-String | Invoke-Expression
-
   Import-Completion -CmdName "tailscale" -ArgsList $Completions.tailscale
   Import-Completion -CmdName "kubectl" -ArgsList $Completions.kubectl
 
-  # zoxide
-  $ZoxideCache = "$global:PS_CACHE_ROOT/zoxide_init.ps1"
-  if (!(Test-Path $ZoxideCache)) {
-    if (Get-Command zoxide -ErrorAction SilentlyContinue) {
-      zoxide init powershell | Out-File $ZoxideCache
-    }
-  }
-  if (Test-Path $ZoxideCache) { . $ZoxideCache }
+  # fixme dont know why
+  # Import-Completion -CmdName "gh" -ArgsList $Completions.gh
+  gh completion -s powershell | Out-String | Invoke-Expression
 }
 
 # 注册一个引擎事件：在提示符准备就绪后运行

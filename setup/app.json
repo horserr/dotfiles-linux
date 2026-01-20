@@ -5,6 +5,15 @@
     {
       "Packages": [
         {
+          "PackageIdentifier": "Flow-Launcher.Flow-Launcher"
+        },
+        {
+          "PackageIdentifier": "Microsoft.WinDbg"
+        },
+        {
+          "PackageIdentifier": "Microsoft.Sysinternals.Suite"
+        },
+        {
           "PackageIdentifier": "GitHub.cli"
         },
         {

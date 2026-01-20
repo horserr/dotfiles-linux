@@ -5,7 +5,7 @@ param(
   [string]$Mode
 )
 
-$file = "modules_list.txt"
+$file = Join-Path -Path $PSScriptRoot -ChildPath "modules_list.txt"
 
 if ($Mode -eq "Export") {
   Get-InstalledPSResource | Select-Object -ExpandProperty Name -Unique | Out-File $file

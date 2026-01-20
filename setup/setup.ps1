@@ -11,27 +11,30 @@ $RealDocuments = [Environment]::GetFolderPath("MyDocuments")
 
 # 定义映射关系 [原位路径] -> [dotfiles 路径]
 $Mappings = @{
-    # PowerShell Profile (注意路径适配 Win11)
-    "$RealDocuments\PowerShell\Microsoft.PowerShell_profile.ps1" = "$DotRoot\powershell\profile"
+  # PowerShell Profile (注意路径适配 Win11)
+  "$RealDocuments\PowerShell\Microsoft.PowerShell_profile.ps1" = "$DotRoot\powershell\profile"
 
-    # Git Config
-    "$env:USERPROFILE\.gitconfig" = "$DotRoot\git"
+  # Git Config
+  "$env:USERPROFILE\.gitconfig"                                = "$DotRoot\git"
 
-    # WSL Config
-    "$env:USERPROFILE\.wslconfig" = "$DotRoot\wsl"
+  # WSL Config
+  "$env:USERPROFILE\.wslconfig"                                = "$DotRoot\wsl"
 
-    # IdeaVim
-    "$env:USERPROFILE\.ideavimrc" = "$DotRoot\ideavim"
+  # IdeaVim
+  "$env:USERPROFILE\.ideavimrc"                                = "$DotRoot\ideavim"
 
-    # SSH Config (仅 Link config 文件而非整个文件夹，确保安全)
-    "$env:USERPROFILE\.ssh\config" = "$DotRoot\ssh"
+  # SSH Config (仅 Link config 文件而非整个文件夹，确保安全)
+  "$env:USERPROFILE\.ssh\config"                               = "$DotRoot\ssh"
 
-    # VS Code
-    "$env:AppData\Code\User\settings.json" = "$DotRoot\vscode\settings"
-    "$env:AppData\Code\User\keybindings.json" = "$DotRoot\vscode\keybindings"
+  # VS Code
+  "$env:AppData\Code\User\settings.json"                       = "$DotRoot\vscode\settings"
+  "$env:AppData\Code\User\keybindings.json"                    = "$DotRoot\vscode\keybindings"
 
-    # NuGet
-    "$env:AppData\NuGet\NuGet.Config" = "$DotRoot\nuget"
+  # NuGet
+  "$env:AppData\NuGet\NuGet.Config"                            = "$DotRoot\nuget"
+
+  # nvim
+  "$env:LOCALAPPDATA\nvim"                                     = "$DotRoot\nvim"
 }
 # 专门处理 Terminal 的路径
 $TerminalPath = Resolve-Path "$env:LocalAppData\Packages\Microsoft.WindowsTerminal*\LocalState\settings.json" -ErrorAction SilentlyContinue
@@ -51,9 +54,13 @@ foreach ($Dest in $Mappings.Keys) {
     if (Test-Path $Source) {
       # 确保父目录存在
       $ParentDir = Split-Path $Dest
-      if (!(Test-Path $ParentDir)) { New-Item -ItemType Directory -Path $ParentDir -Force | Out-Null }
+      if (!(Test-Path $ParentDir)) {
+        New-Item -ItemType Directory -Path $ParentDir -Force | Out-Null
+      }
 
-      if (Test-Path $Dest) { Remove-Item $Dest -Force -ErrorAction Stop }
+      if (Test-Path $Dest) {
+        Remove-Item $Dest -Force -ErrorAction Stop
+      }
 
       # 创建符号链接 (SymbolicLink)
       New-Item -ItemType SymbolicLink -Path $Dest -Target $Source -Force -ErrorAction Stop | Out-Null

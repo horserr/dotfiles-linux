@@ -3,9 +3,6 @@
   // vscode built_in icons: https://code.visualstudio.com/api/references/icons-in-labels
   "editor.tabSize": 2,
   "editor.indentSize": "tabSize",
-  "AHK++.compiler": {
-    "compilerPath": "O:\\Programs\\Utils\\AutoHotKey\\Compiler\\Ahk2Exe.exe",
-  },
   "editor.codeActionsOnSave": {
     // refer to https://www.byteplus.com/en/topic/513795?title=vscode-editor-codeactionsonsave-a-complete-guide
     "source.fixAll": "always",
@@ -130,10 +127,11 @@
   "window.systemColorTheme": "auto",
   //////////// IngelliSense ////////////////////////////////////////////////////
   "editor.suggestOnTriggerCharacters": true,
-  "editor.tabCompletion": "onlySnippets",
+  "editor.tabCompletion": "on",
+  // "editor.tabCompletion": "onlySnippets",
   // "triggercharac",
   "editor.quickSuggestions": {
-    "comments": false, // disable quick suggestion for comments
+    "comments": true, // disable quick suggestion for comments
     "strings": true,
     "other": true,
   },
@@ -248,7 +246,7 @@
     "plaintext": false,
     "markdown": false,
     "scminput": false,
-    "ahk2": false,
+    "ahk2": true,
     "jsonc": false,
     "sql": false,
     "typst": false,
