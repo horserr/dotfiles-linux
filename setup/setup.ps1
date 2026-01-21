@@ -1,89 +1,94 @@
+Set-StrictMode -Version Latest
+$ErrorActionPreference = "Stop"
+
 # D:\dotfiles\powershell\setup\setup.ps1
 if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
   Write-Error "❌ 必须以管理员身份运行此脚本！"
   return
 }
 
-# $DotRoot = "D:/dotfiles"
-$DotRoot = Split-Path -Path $PSScriptRoot -Parent
+#----------------------------------
+# VHDX
+#----------------------------------
+$vhdxPath = "C:\DevDrive.vhdx"
+function CreateVHD() {
+  param(
+    [string]$vhdxPath,
+    [Int64]$size = 50GB,
 
-$RealDocuments = [Environment]::GetFolderPath("MyDocuments")
+    [Parameter(Mandatory = $true)]
+    [ValidatePattern('^[A-Z]$')]
+    [string]$mountDriveName
+  )
+  # 1. 创建虚拟磁盘
+  # 2. 挂载磁盘
+  # 3. 格式化为 ReFS 并命名为 "DevDrive"
+  # 4. 分配盘符（假设使用 D 盘，如果 D 被占用请更改）
+  New-VHD -Path $vhdxPath -SizeBytes $size -Dynamic | `
+    Mount-VHD -Passthru | `
+    Initialize-Disk -Passthru | `
+    New-Partition -DriveLetter $mountDriveName -UseMaximumSize | `
+    Format-Volume -FileSystem ReFS -NewFileSystemLabel "DevDrive"
+}
+$mountDriveName = 'D'
+# if dev drive not exist
+if (-not(Test-Path -Path "$mountDriveName`:")) {
+  Write-Host 'Createing VHDX, please wait'
+  CreateVHD -vhdxPath $vhdxPath -mountDriveName $mountDriveName
+}
+
+#----------------------------------
+# Dotfiles
+#----------------------------------
+if ($currentDriveName -ne $mountDriveName) {
+  throw "当前驱动器不是目标驱动器，停止执行。"
+}
+# $dotRoot = "D:/dotfiles"
+$dotRoot = Split-Path -Path $PSScriptRoot -Parent
+$documentPath = [Environment]::GetFolderPath("MyDocuments")
 
 # 定义映射关系 [原位路径] -> [dotfiles 路径]
-$Mappings = @{
+$mappings = @{
   # PowerShell Profile (注意路径适配 Win11)
-  "$RealDocuments\PowerShell\Microsoft.PowerShell_profile.ps1" = "$DotRoot\powershell\profile"
+  "$documentPath/PowerShell/Microsoft.PowerShell_profile.ps1" = "$dotRoot/powershell/profile"
 
   # Git Config
-  "$env:USERPROFILE\.gitconfig"                                = "$DotRoot\git"
+  "$env:USERPROFILE/.gitconfig" = "$dotRoot/git"
 
   # WSL Config
-  "$env:USERPROFILE\.wslconfig"                                = "$DotRoot\wsl"
+  "$env:USERPROFILE/.wslconfig" = "$dotRoot/wsl"
 
   # IdeaVim
-  "$env:USERPROFILE\.ideavimrc"                                = "$DotRoot\ideavim"
+  "$env:USERPROFILE/.ideavimrc" = "$dotRoot/ideavim"
 
   # SSH Config (仅 Link config 文件而非整个文件夹，确保安全)
-  "$env:USERPROFILE\.ssh\config"                               = "$DotRoot\ssh"
+  "$env:USERPROFILE/.ssh/config" = "$dotRoot/ssh"
 
   # VS Code
-  "$env:AppData\Code\User\settings.json"                       = "$DotRoot\vscode\settings"
-  "$env:AppData\Code\User\keybindings.json"                    = "$DotRoot\vscode\keybindings"
+  "$env:AppData/Code/User/settings.json" = "$dotRoot/vscode/settings"
+  "$env:AppData/Code/User/keybindings.json" = "$dotRoot/vscode/keybindings"
 
   # NuGet
-  "$env:AppData\NuGet\NuGet.Config"                            = "$DotRoot\nuget"
+  "$env:AppData/NuGet/NuGet.Config" = "$dotRoot/nuget"
 
   # nvim
-  "$env:LOCALAPPDATA\nvim"                                     = "$DotRoot\nvim"
-}
-# 专门处理 Terminal 的路径
-$TerminalPath = Resolve-Path "$env:LocalAppData\Packages\Microsoft.WindowsTerminal*\LocalState\settings.json" -ErrorAction SilentlyContinue
-if ($TerminalPath) {
-  $Mappings[$TerminalPath.Path] = "$DotRoot\terminal"
-}
+  "$env:LOCALAPPDATA/nvim" = "$dotRoot/nvim"
 
-$SuccessCount = 0
-$FailureList = @()
+  # windows terminal preview
+  (
+    "$env:LOCALAPPDATA/Packages/" +
+    "Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe/" +
+    "LocalState/settings.json"
+  ) = "$dotRoot/terminal"
+}
 
 Write-Host "`n🔗 正在同步 Dotfiles 配置..." -ForegroundColor Cyan
-Write-Host "----------------------------------"
 
-foreach ($Dest in $Mappings.Keys) {
-  $Source = $Mappings[$Dest]
-  try {
-    if (Test-Path $Source) {
-      # 确保父目录存在
-      $ParentDir = Split-Path $Dest
-      if (!(Test-Path $ParentDir)) {
-        New-Item -ItemType Directory -Path $ParentDir -Force | Out-Null
-      }
+foreach ($from in $mappings.Keys) {
+  $to = $mappings[$from]
+  # create parent folder without error or override if exists
+  New-Item -Path (Split-Path $from -Parent) -ItemType Directory -Force | Out-Null
 
-      if (Test-Path $Dest) {
-        Remove-Item $Dest -Force -ErrorAction Stop
-      }
-
-      # 创建符号链接 (SymbolicLink)
-      New-Item -ItemType SymbolicLink -Path $Dest -Target $Source -Force -ErrorAction Stop | Out-Null
-      Write-Host "✅ [成功] $Dest" -ForegroundColor Green
-      $SuccessCount++
-    }
-    else {
-      throw "源文件不存在"
-    }
-  }
-  catch {
-    Write-Host "❌ [失败] $Dest" -ForegroundColor Red
-    $FailureList += [PSCustomObject]@{ Target = $Dest; Reason = $_.Exception.Message }
-  }
-}
-
-# --- 统计输出 ---
-Write-Host "`n=================================="
-Write-Host "📊 同步报告:" -ForegroundColor Cyan
-Write-Host "成功数: $SuccessCount" -ForegroundColor Green
-Write-Host "失败数: $($FailureList.Count)" -ForegroundColor ($FailureList.Count -eq 0 ? "Green" : "Red")
-
-if ($FailureList.Count -gt 0) {
-  Write-Host "`n具体错误明细:" -ForegroundColor Red
-  $FailureList | Format-Table -AutoSize
+  # create symbolic link regardless of folder and file
+  New-Item -ItemType SymbolicLink -Path $from -Target $to -Force | Out-Null
 }

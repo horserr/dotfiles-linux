@@ -4,6 +4,9 @@
   "Sources": [
     {
       "Packages": [
+        // { admin privilege
+        //   "PackageIdentifier": "Nilesoft.Shell"
+        // },
         {
           "PackageIdentifier": "qBittorrent.qBittorrent.Beta"
         },

@@ -1,5 +1,3 @@
-# 自定义函数配置
-
 # 带参数的别名（需封装成函数，因为Set-Alias不支持参数）
 function ll {
   if (!(Get-Module Terminal-Icons)) { Import-Module Terminal-Icons }
@@ -7,7 +5,6 @@ function ll {
 }
 
 function cd.. { Set-Location .. }                    # cd.. 快速回退目录
-function cdd { Set-Location I:\ }               # cdd 快速跳转到工作目录
 function conf { code (Split-Path -Parent $PSScriptRoot) }
 function util { Invoke-RestMethod "https://christitus.com/win" | Invoke-Expression }
 function myip { curl ifconfig.me }
@@ -18,11 +15,15 @@ function gp {
 }
 
 function e {
-  Get-ChildItem . -Recurse -Attributes !Directory | Invoke-Fzf | ForEach-Object { nvim $_ }
+  Get-ChildItem . -Recurse -Attributes !Directory | `
+    Invoke-Fzf | `
+    ForEach-Object { nvim $_ }
 }
 
 function edit {
-  Get-ChildItem . -Recurse -Attributes !Directory | Invoke-Fzf | ForEach-Object { code $_ }
+  Get-ChildItem . -Recurse -Attributes !Directory | `
+    Invoke-Fzf | `
+    ForEach-Object { code $_ }
 }
 
 function ex {
@@ -31,10 +32,18 @@ function ex {
 }
 
 function env { rundll32 sysdm.cpl, EditEnvironmentVariables }
-function reload { . $PROFILE }
+function SpecialFolders {
+  [Enum]::GetValues([Environment+SpecialFolder]) | ForEach-Object {
+    [PSCustomObject]@{
+      Enum = $_
+      Path = [Environment]::GetFolderPath($_)
+    }
+  } | Format-Table -AutoSize
+  Write-Host "Use [Environment]::GetFolderPath('special')" -ForegroundColor Magenta
+}
 
 function which {
-  param( [string]$Path)
+  param([string]$Path)
   Get-Command $Path | Select-Object source
 }
 
@@ -43,6 +52,12 @@ function up-all {
   Write-Host "正在全面更新 PowerShell 模块..." -ForegroundColor Yellow
   Update-PSResource -Force -AcceptLicense
   Write-Host "更新完成！" -ForegroundColor Green
+}
+
+function memo {
+  Write-Host @"
+Get-AppxPackage -Name *terminal*
+"@
 }
 
 function ssh-copy-id {
