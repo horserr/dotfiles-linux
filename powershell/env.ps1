@@ -7,7 +7,9 @@ $env:EDITOR = 'nvim'
 
 # 扩展 PATH
 $newPath = @(
-  "C:\Program Files (x86)\Microsoft\Edge\Application"
+  "C:\Program Files (x86)\Microsoft\Edge\Application",
+  "C:\Program Files\7-Zip",
+  "C:\Program Files\Everything 1.5a"
 )
 $env:Path = ($newPath + $env:Path.Split(';')) -join ';'
 

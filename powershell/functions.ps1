@@ -119,7 +119,7 @@ function Get-FastSize {
   }
 }
 
-function Invoke-QuickClean {
+function Invoke-MyClean {
   [CmdletBinding()]
   param()
 

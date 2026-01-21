@@ -2,7 +2,8 @@ DockerCompletion
 Microsoft.WinGet.Client
 posh-git
 Posh-SSH
-Pscx
 PSFzf
 Terminal-Icons
 WSLTabCompletion
+7Zip4Powershell
+NerdFonts

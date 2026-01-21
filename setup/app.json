@@ -5,6 +5,9 @@
     {
       "Packages": [
         {
+          "PackageIdentifier": "qBittorrent.qBittorrent.Beta"
+        },
+        {
           "PackageIdentifier": "Flow-Launcher.Flow-Launcher"
         },
         {
