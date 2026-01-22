@@ -40,6 +40,7 @@ if (-not(Test-Path -Path "$mountDriveName`:")) {
 #----------------------------------
 # Dotfiles
 #----------------------------------
+$currentDriveName = (Get-Location).Drive.Name
 if ($currentDriveName -ne $mountDriveName) {
   throw "当前驱动器不是目标驱动器，停止执行。"
 }

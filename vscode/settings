@@ -172,7 +172,7 @@
   "editor.cursorSmoothCaretAnimation": "on",
   "editor.cursorSurroundingLines": 5,
   "editor.foldingImportsByDefault": true,
-  "editor.fontFamily": "FiraCode Nerd Font Propo, LXGW WenKai, 江西拙楷, 杨任东竹石体 Heavy, Consolas, Microsoft YaHei",
+  "editor.fontFamily": "FiraCode Nerd Font, LXGW Neo XiHei, 江西拙楷, 杨任东竹石体 Heavy, Consolas, Microsoft YaHei",
   "editor.fontLigatures": true,
   // Editor settings
   "editor.fontSize": 16,
@@ -1346,6 +1346,7 @@
   "python.analysis.inlayHints.pytestParameters": true,
   "python.analysis.inlayHints.variableTypes": true,
   "python.analysis.typeCheckingMode": "standard",
+  "python.defaultInterpreterPath": "O:\\SDK\\Python\\Python313\\python.exe",
   // "python.defaultInterpreterPath": "O:\\SDK\\Python\\Python313\\python.exe",
   "python.analysis.enableTroubleshootMissingImports": true,
   "python.analysis.cacheLSPData": true,

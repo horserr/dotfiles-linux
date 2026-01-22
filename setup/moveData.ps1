@@ -78,7 +78,7 @@ foreach ($from in $mappings.Keys) {
 
     # 修改后的 robocopy 逻辑建议添加重试限制，防止因个别锁定文件死循环
     # /R:2 /W:2 表示失败重试2次，等待2秒
-    robocopy "$from" "$to" /E /MOVE /XF "Web Data-journal" /R:2 /W:2
+    robocopy "$from" "$to" /E /MOVE /R:2 /W:2
     # note: add /L to list files without copying
     # robocopy "$from" "$to" /E /MOVE /XF "Web Data-journal" /NFL /NDL /NJH | Out-Null
     # display message and process
