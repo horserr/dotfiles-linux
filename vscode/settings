@@ -354,8 +354,8 @@
   "vim.argumentObjectSeparators": [",", ";"],
   "vim.autoSwitchInputMethod.defaultIM": "1033",
   "vim.autoSwitchInputMethod.enable": true,
-  "vim.autoSwitchInputMethod.obtainIMCmd": "O:\\self-tools\\im-select.exe",
-  "vim.autoSwitchInputMethod.switchIMCmd": "O:\\self-tools\\im-select.exe {im}",
+  "vim.autoSwitchInputMethod.obtainIMCmd": "D:/path/im-select.exe",
+  "vim.autoSwitchInputMethod.switchIMCmd": "D:/path/im-select.exe {im}",
   // Vim settings
   "vim.camelCaseMotion.enable": true,
   "vim.cursorStylePerMode.insert": "line-thin",
@@ -1211,7 +1211,7 @@
   "css.validate": true,
   "scss.validate": true,
   "[html, css, json, js, ts, tsx, jsx, jsonc, http]": {
-    "editor.defaultFormatter": "prettier.prettier-vscode",
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
     "files.autoSave": "onWindowChange",
     /* cannot set here     "editor.wordWrapColumn": 80,
     "editor.wordWrap": "bounded" // this setting file cannot display this bounded wrap effect */
@@ -1238,7 +1238,7 @@
   "terminal.integrated.stickyScroll.enabled": false,
   "terminal.integrated.stickyScroll.maxLineCount": 3,
   "[jsonc]": {
-    "editor.defaultFormatter": "prettier.prettier-vscode",
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "explorer.confirmDelete": false,
   "window.autoDetectColorScheme": true,
@@ -1272,7 +1272,7 @@
     "wrapLineLength": 120,
   },
   "[markdown]": {
-    "editor.defaultFormatter": "prettier.prettier-vscode",
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.fontFamily": "LXGW WenKai",
     "editor.fontSize": 17,
     "editor.letterSpacing": 0.5,
@@ -1374,14 +1374,8 @@
   "chat.agent.thinking.collapsedTools": "withThinking",
   "chat.viewSessions.orientation": "stacked",
   "terminal.external.windowsExec": "wt",
-  "[css]": {
-    "editor.defaultFormatter": "prettier.prettier-vscode",
-  },
   "markdown.styles": [".vscode/custom-style.css"],
   "[vue]": {
     "editor.defaultFormatter": "Vue.volar",
-  },
-  "[json]": {
-    "editor.defaultFormatter": "prettier.prettier-vscode",
   },
 }

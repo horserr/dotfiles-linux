@@ -6,7 +6,10 @@ function ll {
 
 function cd.. { Set-Location .. }                    # cd.. 快速回退目录
 function conf { code (Split-Path -Parent $PSScriptRoot) }
-function util { Invoke-RestMethod "https://christitus.com/win" | Invoke-Expression }
+function util {
+  $command = "Invoke-RestMethod https://christitus.com/win | Invoke-Expression"
+  powershell -NoProfile -Command $command
+}
 function myip { curl ifconfig.me }
 function v { $Input | nvim - }                  # Get-Process | v
 
@@ -31,15 +34,8 @@ function ex {
   explorer.exe $Path
 }
 
-function env { rundll32 sysdm.cpl, EditEnvironmentVariables }
-function SpecialFolders {
-  [Enum]::GetValues([Environment+SpecialFolder]) | ForEach-Object {
-    [PSCustomObject]@{
-      Enum = $_
-      Path = [Environment]::GetFolderPath($_)
-    }
-  } | Format-Table -AutoSize
-  Write-Host "Use [Environment]::GetFolderPath('special')" -ForegroundColor Magenta
+function env {
+  rundll32 sysdm.cpl, EditEnvironmentVariables
 }
 
 function which {
@@ -57,6 +53,9 @@ function up-all {
 function memo {
   Write-Host @"
 Get-AppxPackage -Name *terminal*
+(Get-MpPreference).ExclusionPath
+Add-MpPreference -ExclusionPath "C:\MyFolder"
+Remove-MpPreference -ExclusionPath "C:\MyFolder"
 "@
 }
 
