@@ -22,10 +22,21 @@ optionCreate -folder $cacheFolder
 # python uv
 # ------------------------
 
+$defaultIndexUrl = "http://mirrors.aliyun.com/pypi/simple/"
+$indexURL = "https://mirrors.ustc.edu.cn/pypi/simple/ https://pypi.tuna.tsinghua.edu.cn/simple https://mirrors.cloud.tencent.com/pypi/simple/"
+[Environment]::SetEnvironmentVariable("UV_INDEX", $indexURL, "User")
+[Environment]::SetEnvironmentVariable("UV_DEFAULT_INDEX", $defaultIndexUrl, "User")
+[Environment]::SetEnvironmentVariable("UV_INDEX_STRATEGY", "unsafe-best-match", "User")
+
 $targetUv = "$cacheFolder/uv"
 optionCreate -folder $targetUv
 
-[Environment]::SetEnvironmentVariable("UV_CACHE_DIR", $targetUv, "User")
+$uvCacheDir = "$targetUv/cache"
+$uvPythonDir = "$targetUv/python"
+$uvToolsDir = "$targetUv/tool"
+[Environment]::SetEnvironmentVariable("UV_CACHE_DIR", $uvCacheDir, "User")
+[Environment]::SetEnvironmentVariable("UV_PYTHON_INSTALL_DIR", $uvPythonDir, "User")
+[Environment]::SetEnvironmentVariable("UV_TOOL_DIR", $uvToolsDir, "User")
 
 # ------------------------
 # bun

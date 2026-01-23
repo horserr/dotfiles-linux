@@ -37,6 +37,11 @@ function ex {
 function env {
   rundll32 sysdm.cpl, EditEnvironmentVariables
 }
+function bios {
+  Write-Host "You are going to restart computer and enter BIOS"
+  Pause
+  shutdown /r /fw /f /t 0
+}
 
 function which {
   param([string]$Path)
