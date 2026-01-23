@@ -3,9 +3,9 @@
 autoProxy=true
 
 # 资源限制：建议使用具体单位（GB），比长串字节数更易维护
-memory=6GB
+memory=8GB
 processors=8
-swap=4GB
+swap=12GB
 
 defaultVhdSize=40GB
 
@@ -14,7 +14,6 @@ defaultVhdSize=40GB
 #   "DISPLAY": null,
 #   "WAYLAND_DISPLAY": null
 # }
-guiApplications=false
 # guiApplications=true
 
 [experimental]

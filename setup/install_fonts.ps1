@@ -19,3 +19,5 @@ $NerdFonts = @(
 $NerdFonts | Foreach-Object -ThrottleLimit 5 -Parallel {
   Install-NerdFont -Name $PSItem
 }
+
+# Get-ChildItem -Recurse | Where-Object { $_.Extension -in '.ttf', '.otf' } | Install-Font

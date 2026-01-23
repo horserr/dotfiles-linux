@@ -8,6 +8,9 @@
         //   "PackageIdentifier": "Nilesoft.Shell"
         // },
         {
+          "PackageIdentifier": "RamenSoftware.Windhawk"
+        },
+        {
           "PackageIdentifier": "qBittorrent.qBittorrent.Beta"
         },
         {

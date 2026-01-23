@@ -17,6 +17,11 @@ function gp {
   git push origin $(git branch --show-current)
 }
 
+function proxy-on {
+  $env:HTTP_PROXY = "http://localhost:7897"
+  $env:HTTPS_PROXY = "http://localhost:7897"
+}
+
 function e {
   Get-ChildItem . -Recurse -Attributes !Directory | `
     Invoke-Fzf | `
@@ -135,87 +140,5 @@ function Get-FastSize {
       Write-Warning "无法完全访问路径: $absPath"
       return 0
     }
-  }
-}
-
-function Invoke-MyClean {
-  [CmdletBinding()]
-  param()
-
-  # --- 内部清理核心逻辑 (避免代码重复) ---
-  function Private-DoClean {
-    param($TargetPaths, $CleanPS)
-    $totalSavedBytes = 0
-
-    foreach ($path in $TargetPaths) {
-      if (-not (Test-Path $path)) { continue }
-
-      Write-Host "[扫描中] $path ..." -ForegroundColor Gray
-      $before = Get-FastSize -Path $path -Raw
-
-      # 清理文件
-      Get-ChildItem -Path $path -Recurse -Force -ErrorAction SilentlyContinue |
-      Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
-
-      $after = Get-FastSize -Path $path -Raw
-      $saved = $before - $after
-      $totalSavedBytes += $saved
-      Write-Host "[完成] 已释放: $([Math]::Round($saved/1MB, 2)) MB" -ForegroundColor Green
-    }
-
-    if ($CleanPS -and $env:PS_CACHE_ROOT -and (Test-Path $env:PS_CACHE_ROOT)) {
-      Write-Host "[清理中] PowerShell 缓存..." -ForegroundColor Yellow
-      $before = Get-FastSize -Path $env:PS_CACHE_ROOT -Raw
-      Remove-Item -Path "$env:PS_CACHE_ROOT\*" -Recurse -Force -ErrorAction SilentlyContinue
-      $after = Get-FastSize -Path $env:PS_CACHE_ROOT -Raw
-      $totalSavedBytes += ($before - $after)
-      Write-Host "[完成] 缓存已清理" -ForegroundColor Green
-    }
-
-    Write-Host "`n==========================================" -ForegroundColor Cyan
-    Write-Host " 总计释放空间: $([Math]::Round($totalSavedBytes/1MB, 2)) MB " -ForegroundColor White -BackgroundColor DarkGreen
-    Write-Host "==========================================" -ForegroundColor Cyan
-  }
-
-  # --- 1. 界面 ---
-  Clear-Host
-  $title = @"
-==========================================
-      高效临时文件清理工具
-==========================================
-1. 清理用户临时文件夹 ($env:TEMP)
-2. 清理系统临时文件夹 (需管理员权限)
-3. 清理 PowerShell 缓存
-4. 清理全部 (推荐)
-q. 退出
-"@
-  Write-Host $title -ForegroundColor Cyan
-  $choice = Read-Host "`n请选择操作序号"
-  if ($choice -eq 'q') { return }
-
-  # --- 2. 逻辑分配 ---
-  $targets = @()
-  $cleanPS = $false
-  $needsAdmin = $false
-
-  switch ($choice) {
-    '1' { $targets = @($env:TEMP) }
-    '2' { $targets = @("$env:SystemRoot\Temp"); $needsAdmin = $true }
-    '3' { $cleanPS = $true }
-    '4' { $targets = @($env:TEMP, "$env:SystemRoot\Temp"); $cleanPS = $true; $needsAdmin = $true }
-    default { return }
-  }
-
-  # --- 3. 权限检查与执行 ---
-  $isAdmin = ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
-
-  if ($needsAdmin -and -not $isAdmin) {
-    Write-Host "`n[!] 检测到需要管理员权限，正在尝试提升..." -ForegroundColor Yellow
-    Start-Process powershell.exe -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command & { . '$($MyInvocation.MyCommand.Definition)'; Private-DoClean -TargetPaths @($($targets | ForEach-Object {"'$_'"})) -CleanPS $(`$$cleanPS); Read-Host '按回车退出' }" -Verb RunAs
-  }
-  else {
-    Private-DoClean -TargetPaths $targets -CleanPS $cleanPS
-    Write-Host "`n注：部分文件无法删除是正常现象（正在被使用）。" -ForegroundColor Gray
-    Read-Host "`n清理完成，按回车键返回"
   }
 }
