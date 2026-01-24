@@ -37,8 +37,8 @@
     "defaultInputScope": "alphanumericHalfWidth",
     "defaultProfile": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
     "experimental.enableColorSelection": true,
-    "initialCols": 120,
-    "initialRows": 23,
+    "initialCols": 110,
+    "initialRows": 22,
     "keybindings": 
     [
         {

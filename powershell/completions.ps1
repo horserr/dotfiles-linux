@@ -4,9 +4,11 @@
 $Completions = @{
   "gh"        = @("completion", "-s", "powershell")
   "uv"        = @("generate-shell-completion", "powershell")
+  "uvx"       = @("--generate-shell-completion", "powershell")
   "tailscale" = @("completion", "powershell")
   "kubectl"   = @("completion", "powershell")
 }
+$modules = @("WSLTabCompletion", "DockerCompletion")
 
 $CompletionCacheTtl = [TimeSpan]::FromDays(1)
 
@@ -63,18 +65,38 @@ $PostStartTask = {
   }
   if (Test-Path $ZoxideCache) { . $ZoxideCache }
 
-  # 2. 静默加载模块，不输出任何内容
+  # Winget 补全
+  Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
+    param($wordToComplete, $commandAst, $cursorPosition)
+    [Console]::InputEncoding = [Console]::OutputEncoding = $OutputEncoding = [System.Text.Utf8Encoding]::new()
+    $Local:word = $wordToComplete.Replace('"', '""')
+    $Local:ast = $commandAst.ToString().Replace('"', '""')
+    winget complete --word="$Local:word" --commandline "$Local:ast" --position $cursorPosition | ForEach-Object {
+      [System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', $_)
+    }
+  }
+
+  # USBIPD 补全
+  Register-ArgumentCompleter -Native -CommandName usbipd -ScriptBlock {
+    param($commandName, $wordToComplete, $cursorPosition)
+    usbipd [suggest:$cursorPosition] "$wordToComplete" | ForEach-Object {
+      [System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', $_)
+    }
+  }
+
   # no need to import posh-git
-  $modules = @("WSLTabCompletion", "DockerCompletion")
   foreach ($m in $modules) {
     if (!(Get-Module $m)) {
       Import-Module $m -ErrorAction SilentlyContinue | Out-Null
     }
   }
 
-  Import-Completion -CmdName "uv" -ArgsList $Completions.uv
-  Import-Completion -CmdName "tailscale" -ArgsList $Completions.tailscale
-  Import-Completion -CmdName "kubectl" -ArgsList $Completions.kubectl
+  foreach ($c in $Completions.Keys) {
+    if (!(Get-Command $c -ErrorAction SilentlyContinue)) {
+      continue
+    }
+    Import-Completion -CmdName $c -ArgsList $Completions[$c]
+  }
 
   # fixme dont know why
   # Import-Completion -CmdName "gh" -ArgsList $Completions.gh

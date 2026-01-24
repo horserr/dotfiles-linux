@@ -266,7 +266,7 @@
     "jupyter-notebook": "left",
   },
   "notebook.cellToolbarVisibility": "hover",
-  "notebook.defaultFormatter": "ms-python.black-formatter",
+  "notebook.defaultFormatter": "charliermarsh.ruff",
   "notebook.diff.overviewRuler": true,
   "notebook.formatOnCellExecution": true,
   "notebook.formatOnSave.enabled": true,
@@ -1284,7 +1284,7 @@
   },
   "[python]": {
     "diffEditor.ignoreTrimWhitespace": true,
-    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.defaultFormatter": "charliermarsh.ruff",
     "editor.tabSize": 4,
   },
   "[rust]": {
@@ -1327,7 +1327,7 @@
     "ms-python.vscode-python-envs",
     "ms-python.vscode-pylance",
     "ms-python.debugpy",
-    "ms-python.black-formatter",
+    "charliermarsh.ruff",
     "Prettier.prettier-vscode",
     "Gruntfuggly.todo-tree",
     // "ms-vscode-remote.remote-containers",
@@ -1378,4 +1378,5 @@
   "[vue]": {
     "editor.defaultFormatter": "Vue.volar",
   },
+  "workbench.iconTheme": "vira-icons-palenight",
 }
