@@ -11,6 +11,9 @@
           "PackageIdentifier": "RamenSoftware.Windhawk"
         },
         {
+          "PackageIdentifier": "LLVM.LLVM"
+        },
+        {
           "PackageIdentifier": "qBittorrent.qBittorrent.Beta"
         },
         {

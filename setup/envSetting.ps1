@@ -19,6 +19,12 @@ $cacheFolder = "$devDrive/DevCache"
 optionCreate -folder $cacheFolder
 
 # ------------------------
+# LLVM
+# ------------------------
+$systemPathVariable = [Environment]::GetEnvironmentVariable("PATH", "Machine")
+
+
+# ------------------------
 # python uv
 # ------------------------
 

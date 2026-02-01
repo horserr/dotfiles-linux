@@ -48,6 +48,20 @@ function bios {
   shutdown /r /fw /f /t 0
 }
 
+function special {
+  $folders = [Environment+SpecialFolder]::GetValues([Environment+SpecialFolder])
+  $results = foreach ($folder in $folders) {
+    [PSCustomObject]@{
+      FolderName = $folder
+      Path       = [Environment]::GetFolderPath($folder)
+    }
+  }
+
+  # 过滤掉路径为空的项（有些文件夹在当前系统环境下可能不存在）并按表格显示
+  # $results | Where-Object { $_.Path -ne "" } | Out-GridView -Title "所有特殊文件夹路径" # 如果想要弹窗查看
+  $results | Where-Object { $_.Path -ne "" } | Format-Table -AutoSize
+}
+
 function which {
   param([string]$Path)
   Get-Command $Path | Select-Object source
@@ -103,44 +117,5 @@ function ssh-copy-id {
   }
   else {
     Write-Error "发送失败，请检查连接或密码。"
-  }
-}
-
-function Get-FastSize {
-  [CmdletBinding()]
-  param(
-    [Parameter(Mandatory = $false, ValueFromPipeline = $true, Position = 0)]
-    [string]$Path = ".",
-    [switch]$Raw
-  )
-
-  process {
-    if (-not (Test-Path $Path)) { return 0 }
-    $absPath = (Resolve-Path $Path).Path
-
-    try {
-      $totalBytes = 0
-      # 优化：直接调用 .NET 方法获取 FileInfo 避免反复 New-Object
-      $dirInfo = New-Object System.IO.DirectoryInfo($absPath)
-      $files = $dirInfo.EnumerateFiles("*", [System.IO.SearchOption]::AllDirectories)
-
-      foreach ($f in $files) {
-        try { $totalBytes += $f.Length } catch { }
-      }
-
-      if ($Raw) { return $totalBytes }
-
-      # 自动转换逻辑
-      switch ($totalBytes) {
-        { $_ -ge 1GB } { return "{0:N2} GB" -f ($_ / 1GB) }
-        { $_ -ge 1MB } { return "{0:N2} MB" -f ($_ / 1MB) }
-        { $_ -ge 1KB } { return "{0:N2} KB" -f ($_ / 1KB) }
-        default { return "$_ Bytes" }
-      }
-    }
-    catch {
-      Write-Warning "无法完全访问路径: $absPath"
-      return 0
-    }
   }
 }
