@@ -20,9 +20,9 @@ url = "https://mirrors.aliyun.com/pypi/simple/"
 name = "ustc"
 url = "https://mirrors.ustc.edu.cn/pypi/simple/"
 
-[[index]]
-name = "tuna"
-url = "https://pypi.tuna.tsinghua.edu.cn/simple"
+# [[index]]
+# name = "tuna"
+# url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[index]]
 name = "tencent"

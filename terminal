@@ -16,10 +16,6 @@
             "id": "User.paste"
         },
         {
-            "command": "find",
-            "id": "User.find"
-        },
-        {
             "command": 
             {
                 "action": "splitPane",
@@ -27,6 +23,10 @@
                 "splitMode": "duplicate"
             },
             "id": "User.splitPane.A6751878"
+        },
+        {
+            "command": "find",
+            "id": "User.find"
         }
     ],
     "alwaysShowNotificationIcon": false,
@@ -46,12 +46,12 @@
             "keys": "ctrl+c"
         },
         {
-            "id": "User.paste",
-            "keys": "ctrl+v"
-        },
-        {
             "id": "User.find",
             "keys": "ctrl+shift+f"
+        },
+        {
+            "id": "User.paste",
+            "keys": "ctrl+v"
         },
         {
             "id": "User.splitPane.A6751878",
@@ -177,6 +177,18 @@
                 "hidden": false,
                 "name": "PowerShell 7 Preview",
                 "source": "Windows.Terminal.PowershellCore"
+            },
+            {
+                "guid": "{7beecf27-bd98-589a-b8cc-08742a710dec}",
+                "hidden": false,
+                "name": "Developer Command Prompt for VS 18 [Preview]",
+                "source": "Windows.Terminal.VisualStudio"
+            },
+            {
+                "guid": "{f8c55fca-dd3e-52ec-b220-d0588b3fa20f}",
+                "hidden": false,
+                "name": "Developer PowerShell for VS 18 [Preview]",
+                "source": "Windows.Terminal.VisualStudio"
             }
         ]
     },

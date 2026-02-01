@@ -214,7 +214,7 @@
   "files.autoGuessEncoding": true,
   // File settings
   "files.autoSave": "onFocusChange",
-  "files.dialog.defaultPath": "I:\\\\",
+  "files.dialog.defaultPath": "D:\\\\Workspace",
   "files.exclude": {
     "**/.DS_Store": true,
     "**/.git": true,
@@ -311,7 +311,8 @@
     "-vim.autoSwitchInputMethod.defaultIM",
     "-vim.autoSwitchInputMethod.obtainIMCmd",
     "-vim.autoSwitchInputMethod.switchIMCmd",
-    "-window.zoomLevel"
+    "-window.zoomLevel",
+    "-files.dialog.defaultPath"
   ],
   // "terminal.integrated.commandsToSkipShell": ["matlab.interrupt"],
   "terminal.integrated.confirmOnExit": "hasChildProcesses",
@@ -1080,7 +1081,8 @@
     "chat.fontSize",
     "window.zoomLevel",
     "window.zoomPerWindow",
-    "terminal.integrated.tabs.defaultIcon"
+    "terminal.integrated.tabs.defaultIcon",
+    "files.dialog.defaultPath"
   ],
   "workbench.tree.stickyScrollMaxItemCount": 4,
   "search.seedWithNearestWord": true,
@@ -1229,7 +1231,6 @@
   "terminal.integrated.enablePersistentSessions": false,
   "editor.minimap.enabled": true,
   "workbench.statusBar.visible": true,
-  "workbench.editor.enablePreview": false,
   "terminal.integrated.defaultProfile.windows": "PowerShell",
   "FSharp.infoPanelReplaceHover": true,
   "livePreview.customExternalBrowser": "Chrome",
@@ -1315,6 +1316,11 @@
   "gitlens.ai.gitkraken.model": "gemini:gemini-2.0-flash",
   "rust-analyzer.showSyntaxTree": true,
   "rust-analyzer.check.command": "clippy",
+  "files.readonlyInclude": {
+    "**/.cargo/registry/src/**/*.rs": true,
+    "**/.cargo/git/checkouts/**/*.rs": true,
+    "**/lib/rustlib/src/rust/library/**/*.rs": true
+  },
   "containers.containerClient": "com.microsoft.visualstudio.containers.docker",
   "containers.orchestratorClient": "com.microsoft.visualstudio.orchestrators.dockercompose",
   "[prolog]": {
@@ -1330,21 +1336,12 @@
   ],
   "prolog.linter.run": "onSave",
   "remote.SSH.defaultExtensions": [
-    "ms-python.python",
-    "ms-python.vscode-python-envs",
-    "ms-python.vscode-pylance",
-    "ms-python.debugpy",
-    "charliermarsh.ruff",
     "Prettier.prettier-vscode",
     "Gruntfuggly.todo-tree",
     // "ms-vscode-remote.remote-containers",
     "ms-azuretools.vscode-containers",
     "tamasfe.even-better-toml"
   ],
-  "remote.SSH.remotePlatform": {
-    "Nvidia": "linux",
-    "horserr": "linux"
-  },
   "python.languageServer": "Pylance",
   "python.analysis.autoFormatStrings": true,
   "python.analysis.completeFunctionParens": true,

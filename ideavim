@@ -18,11 +18,11 @@ set NERDTree
 set highlightedyank
 set functiontextobj
 " set keep-english-in-normal
-nmap s <Plug>(easymotion-s)
 
 """ IDEA specific settings
 if has('ide')
   set ideajoin
+  nmap f <Plug>(easymotion-s)
   " set ideastatusicon=gray
   nmap ge <Action>(GotoNextError)
   nmap gy <Action>(EditorCopy)
@@ -36,11 +36,15 @@ if has('ide')
   nmap <leader>e <Action>(RenameElement)
   nmap <leader>b <Action>(ToggleLineBreakpoint)
   nmap <leader>o <Action>(FileStructurePopup)
-  nmap <leader>z <Action>(ToggleDistractionFreeMode)
   nmap <leader><leader>r <Action>(editRunConfigurations)
   nmap <leader>E <Action>(Refactorings.QuickListPopupAction)
   
+  nmap <leader>c<leader> <Action>(EditorCenterView)
+  nmap <leader>p<leader> <Action>(TogglePowerSave)
+  nmap <leader>z<leader> <Action>(ToggleDistractionFreeMode)
+  
   vmap <leader>E <Action>(Refactorings.QuickListPopupAction)
+  vmap <space>a <Action>(GotoAction)
 
   map <leader>a <Action>(Annotate)
   map <leader>h <Action>(Vcs.ShowTabbedFileHistory)
