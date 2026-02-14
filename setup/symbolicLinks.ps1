@@ -48,6 +48,9 @@ $mappings = @{
 
   # cargo Config
   "$env:USERPROFILE/.cargo/config.toml" = "$dotRoot/cargo"
+
+  # word normal template
+  "$env:APPDATA/Microsoft/Templates/Normal.dotm" = "$dotRoot/Office/Word/Normal.dotm"
 }
 
 Write-Host "`n🔗 正在同步 Dotfiles 配置..." -ForegroundColor Cyan
