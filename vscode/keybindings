@@ -149,20 +149,14 @@
   {
     "key": "shift+enter",
     "command": "PowerShell.RunSelection",
-    // "when": "editorLangId == 'powershell' && editorHasSelection && vim.mode == 'Visual'"
     "when": "editorLangId == 'powershell' && (vim.mode =~ /visual/i) && !editorReadonly"
   },
-  ///////////////////////// custom
-  ///////////////////////// custom
-  ///////////////////////// Settings Cycler
+  ///////////////////////// custom Settings Cycler
   {
     "key": "ctrl+e",
     "command": "-settings.cycle.Trnasform",
     "when": "vim.mode == 'Visual'"
   },
-  ///////////////////////// Settings Cycler
-  ///////////////////////// Settings Cycler
-
   {
     "key": "ctrl+d",
     "command": "-editor.action.addSelectionToNextFindMatch",

@@ -5,7 +5,9 @@ function ll {
 }
 
 function cd.. { Set-Location .. }                    # cd.. 快速回退目录
-function conf { code (Split-Path -Parent $PSScriptRoot) }
+function conf {
+  &code (Split-Path -Parent $PSScriptRoot); exit
+}
 function util {
   $command = "Invoke-RestMethod https://christitus.com/win | Invoke-Expression"
   powershell -NoProfile -Command $command
@@ -20,6 +22,15 @@ function gp {
 function proxy-on {
   $env:HTTP_PROXY = "http://localhost:7897"
   $env:HTTPS_PROXY = "http://localhost:7897"
+}
+
+function edit-history{
+  nvim (Get-PSReadLineOption).HistorySavePath
+}
+
+function startRclone {
+  proxy-on
+  Start-Process "rclone" -ArgumentList "mount od_drive:/ Z: --vfs-cache-mode full --vfs-read-chunk-size 64M --vfs-read-chunk-size-limit 256M --buffer-size 32M --transfers 16 --network-mode --vfs-cache-max-age 24h --vfs-cache-max-size 30G --vfs-write-back 5s --links"
 }
 
 function e {

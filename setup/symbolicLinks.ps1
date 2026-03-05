@@ -63,3 +63,39 @@ foreach ($from in $mappings.Keys) {
   # create symbolic link regardless of folder and file
   New-Item -ItemType SymbolicLink -Path $from -Target $to -Force | Out-Null
 }
+
+# #################
+
+$mappings = @{
+  # rust cargo
+  "$env:USERPROFILE/.cargo"          = "$cacheFolder/.cargo"
+
+  # NuGet 全局包缓存 (非常推荐)
+  "$env:USERPROFILE/.nuget/packages" = "$cacheFolder/nuget-packages"
+}
+
+# 处理每个映射：移动文件夹内容并创建符号链接
+foreach ($from in $mappings.Keys) {
+  $to = $mappings[$from]
+
+  # 确保目标文件夹存在
+  optionCreate -folder $to
+
+  # 如果源存在，使用 robocopy 移动文件到目标
+  Write-Host "📦 移动: $from → $to"
+  if (Test-Path $from) {
+    Stop-Process -Name "msedge", "Code", "visualstudio" -ErrorAction SilentlyContinue
+
+    # 修改后的 robocopy 逻辑建议添加重试限制，防止因个别锁定文件死循环
+    # /R:2 /W:2 表示失败重试2次，等待2秒
+    robocopy "$from" "$to" /E /MOVE /R:2 /W:2
+    # note: add /L to list files without copying
+    # robocopy "$from" "$to" /E /MOVE /XF "Web Data-journal" /NFL /NDL /NJH | Out-Null
+    # display message and process
+  }
+  else {
+    Write-Host "⚠️ 源不存在，跳过: $from"
+  }
+
+  New-Item -ItemType SymbolicLink -Path $from -Target $to -Force | Out-Null
+}

@@ -6,6 +6,21 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
   return
 }
 
+function setEnv {
+  param(
+    [Parameter(Mandatory)][string]$name,
+    [Parameter(Mandatory)][string]$value,
+    [ValidateSet("Process", "User", "Machine")][string]$target = "User",
+    [switch]$ResolvePath
+  )
+
+  if ($ResolvePath -and (Test-Path $value)) {
+    $value = (Resolve-Path -Path $value).Path
+  }
+
+  [Environment]::SetEnvironmentVariable($name, $value, $target)
+}
+
 function optionCreate() {
   param([string]$folder)
   if (!(Test-Path $folder)) {
@@ -14,16 +29,17 @@ function optionCreate() {
 }
 # ------------------------
 
-$devDrive = "D:/"
+$devDrive = (Resolve-Path -Path "D:/").Path
 $cacheFolder = "$devDrive/DevCache"
 optionCreate -folder $cacheFolder
+$cacheFolder = (Resolve-Path -Path $cacheFolder).Path
 
 # ------------------------
 # LLVM
 # ------------------------
 $systemPathVariable = [Environment]::GetEnvironmentVariable("PATH", "Machine")
-$LLVMPath = Resolve-Path -Path "$env:ProgramFiles/LLVM/bin"
-[Environment]::SetEnvironmentVariable("PATH", $systemPathVariable + ";$LLVMPath", "Machine")
+$LLVMPath = (Resolve-Path -Path "$env:ProgramFiles/LLVM/bin").Path
+setEnv -name "PATH" -value ($systemPathVariable + ";" + $LLVMPath) -target "Machine"
 
 # ------------------------
 # python uv
@@ -31,82 +47,42 @@ $LLVMPath = Resolve-Path -Path "$env:ProgramFiles/LLVM/bin"
 
 $targetUv = "$cacheFolder/uv"
 optionCreate -folder $targetUv
+$targetUv = (Resolve-Path -Path $targetUv).Path
 
 $uvCacheDir = "$targetUv/cache"
 $uvPythonDir = "$targetUv/python"
 $uvToolsDir = "$targetUv/tool"
-[Environment]::SetEnvironmentVariable("UV_CACHE_DIR", $uvCacheDir, "User")
-[Environment]::SetEnvironmentVariable("UV_PYTHON_INSTALL_DIR", $uvPythonDir, "User")
-[Environment]::SetEnvironmentVariable("UV_TOOL_DIR", $uvToolsDir, "User")
+optionCreate -folder $uvCacheDir
+optionCreate -folder $uvPythonDir
+optionCreate -folder $uvToolsDir
+setEnv -name "UV_CACHE_DIR" -value $uvCacheDir -target "User" -ResolvePath
+setEnv -name "UV_PYTHON_INSTALL_DIR" -value $uvPythonDir -target "User" -ResolvePath
+setEnv -name "UV_TOOL_DIR" -value $uvToolsDir -target "User" -ResolvePath
 
 # ------------------------
 # rustup
 # ------------------------
 $rustupServer = "https://rsproxy.cn"
 $rustupRoot = "https://rsproxy.cn/rustup"
-[Environment]::SetEnvironmentVariable("RUSTUP_DIST_SERVER", $rustupServer, "User")
-[Environment]::SetEnvironmentVariable("RUSTUP_UPDATE_ROOT", $rustupRoot, "User")
+setEnv -name "RUSTUP_DIST_SERVER" -value $rustupServer -target "User"
+setEnv -name "RUSTUP_UPDATE_ROOT" -value $rustupRoot -target "User"
 
 # ------------------------
 # bun
 # ------------------------
 $targetBun = "$cacheFolder/.bun"
 optionCreate -folder $targetBun
+$targetBun = (Resolve-Path -Path $targetBun).Path
+$targetBunCache = "$targetBun/cache"
+optionCreate -folder $targetBunCache
 
-[Environment]::SetEnvironmentVariable("BUN_INSTALL", "$targetBun", "User")
-[Environment]::SetEnvironmentVariable("BUN_INSTALL_CACHE", "$targetBun/cache", "User")
+setEnv -name "BUN_INSTALL" -value $targetBun -target "User" -ResolvePath
+setEnv -name "BUN_INSTALL_CACHE" -value $targetBunCache -target "User" -ResolvePath
 
 # ------------------------
-# Temp folder: do not change
+# Winget Links
 # ------------------------
 
-# $newTemp = "$cacheFolder/Temp"
-# optionCreate -folder $newTemp
+$winget_links = "$env:LOCALAPPDATA/Microsoft/WinGet/Links"
 
-# [Environment]::SetEnvironmentVariable("TEMP", $newTemp, "User")
-# [Environment]::SetEnvironmentVariable("TMP", $newTemp, "User")
-
-
-$mappings = @{
-  # rust cargo
-  "$env:USERPROFILE/.cargo"                        = "$cacheFolder/.cargo"
-  # vscode extensions
-  "$env:USERPROFILE/.vscode/extensions"            = "$cacheFolder/.vscode-extensions"
-  # edge data
-  "$env:LocalAppData/Microsoft/Edge/User Data"     = "$cacheFolder/edge-data"
-  # NuGet 全局包缓存 (非常推荐)
-  "$env:USERPROFILE/.nuget/packages"               = "$cacheFolder/nuget-packages"
-
-  # Visual Studio 本地缓存目录 (包含 IntelliSense、实验性功能设置等)
-  "$env:LocalAppData/Microsoft/VisualStudio"       = "$cacheFolder/VS-LocalAppData"
-
-  # Visual Studio 安装包缓存 (默认路径通常在 C:\ProgramData\Microsoft\VisualStudio\Packages)
-  "C:/ProgramData/Microsoft/VisualStudio/Packages" = "$cacheFolder/VS-Package-Cache"
-}
-
-# 处理每个映射：移动文件夹内容并创建符号链接
-foreach ($from in $mappings.Keys) {
-  $to = $mappings[$from]
-
-  # 确保目标文件夹存在
-  optionCreate -folder $to
-
-  # 如果源存在，使用 robocopy 移动文件到目标
-  Write-Host "📦 移动: $from → $to"
-  if (Test-Path $from) {
-    Stop-Process -Name "msedge", "Code", "visualstudio" -ErrorAction SilentlyContinue
-
-    # 修改后的 robocopy 逻辑建议添加重试限制，防止因个别锁定文件死循环
-    # /R:2 /W:2 表示失败重试2次，等待2秒
-    robocopy "$from" "$to" /E /MOVE /R:2 /W:2
-    # note: add /L to list files without copying
-    # robocopy "$from" "$to" /E /MOVE /XF "Web Data-journal" /NFL /NDL /NJH | Out-Null
-    # display message and process
-  }
-  else {
-    Write-Host "⚠️ 源不存在，跳过: $from"
-  }
-
-  New-Item -ItemType SymbolicLink -Path $from -Target $to -Force | Out-Null
-}
-
+setEnv -name "WINGET_LINKS" -value $winget_links -target "User" -ResolvePath

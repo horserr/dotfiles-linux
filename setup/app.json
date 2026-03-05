@@ -8,6 +8,15 @@
         //   "PackageIdentifier": "Nilesoft.Shell"
         // },
         {
+          "PackageIdentifier": "Zen-Team.Zen-Browser.Twilight"
+        },
+        {
+          "PackageIdentifier": "surge-downloader.surge"
+        },
+        {
+          "PackageIdentifier": "aelassas.Servy"
+        },
+        {
           "PackageIdentifier": "WinFsp.WinFsp"
         },
         {
@@ -141,9 +150,6 @@
         },
         {
           "PackageIdentifier": "JesseDuffield.lazygit"
-        },
-        {
-          "PackageIdentifier": "NSSM.NSSM"
         },
         {
           "PackageIdentifier": "Zoom.Zoom.EXE"

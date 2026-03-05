@@ -29,7 +29,7 @@
             "id": "User.find"
         }
     ],
-    "alwaysShowNotificationIcon": false,
+    "alwaysShowNotificationIcon": true,
     "centerOnLaunch": true,
     "compatibility.allowHeadless": false,
     "copyFormatting": "all",
@@ -60,7 +60,7 @@
     ],
     "language": "en-US",
     "launchMode": "default",
-    "minimizeToNotificationArea": false,
+    "minimizeToNotificationArea": true,
     "newTabMenu": 
     [
         {

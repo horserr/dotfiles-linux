@@ -1334,10 +1334,6 @@
     "diffEditor.ignoreTrimWhitespace": true,
     "editor.defaultFormatter": "charliermarsh.ruff",
     "editor.formatOnSave": true,
-    "editor.codeActionsOnSave": {
-      "source.fixAll.ruff": "always",
-      "source.organizeImports.ruff": "always"
-    },
     "editor.wordWrap": "on",
     "editor.indentSize": "tabSize",
     "editor.tabSize": 4
@@ -1453,8 +1449,6 @@
   "python.analysis.typeEvaluation.strictDictionaryInference": true,
   "python.analysis.typeEvaluation.strictSetInference": true,
   "python.terminal.activateEnvInCurrentTerminal": true,
-  "editor.formatOnSaveMode": "modificationsIfAvailable",
-  "editor.formatOnSave": true,
   "github.copilot.chat.notebook.enhancedNextEditSuggestions.enabled": true,
   "github.copilot.chat.tools.memory.enabled": true,
   "python-envs.terminal.autoActivationType": "shellStartup",
@@ -1485,5 +1479,16 @@
   "xlsxViewer.md.syncScroll": true,
   "xlsxViewer.md.previewPosition": "right",
   "xlsxViewer.md.showOutline": false,
-  "markdown-preview-enhanced.previewTheme": "github-dark.css"
+  "markdown-preview-enhanced.previewTheme": "github-dark.css",
+  "json.schemaDownload.trustedDomains": {
+    "https://schemastore.azurewebsites.net/": true,
+    "https://raw.githubusercontent.com/": true,
+    "https://www.schemastore.org/": true,
+    "https://json.schemastore.org/": true,
+    "https://json-schema.org/": true,
+    "https://aka.ms": true
+  },
+  "workbench.editor.useModal": "some",
+  "terminal.integrated.enableImages": true,
+  "chat.tools.terminal.sandbox.enabled": true,
 }
