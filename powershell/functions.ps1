@@ -139,6 +139,10 @@ function up-all {
 
 function memo {
   Write-Host @"
+  spf: superfile
+  trip: trippy
+  exhyperv
+
 robocopy C:\Source D:\Destination /MIR /Z /XA:H /W:5 /R:3
 
 Get-AppxPackage -Name *terminal*
@@ -150,6 +154,19 @@ Remove-MpPreference -ExclusionPath "C:\MyFolder"
 git rm --cached file.txt  ; # 从 Git 索引中移除但保留工作区文件
 git restore --staged file.txt ; # 将暂存区的文件恢复到工作区
 
+{
+  "builder": {
+    "gc": {
+      "defaultKeepStorage": "20GB",
+      "enabled": true
+    }
+  },
+  "experimental": false,
+  "registry-mirrors": [
+    "https://35rtko0a.mirror.aliyuncs.com",
+    "https://docker.m.daocloud.io"
+  ]
+}
 "@
 }
 

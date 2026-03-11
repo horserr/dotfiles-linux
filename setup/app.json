@@ -8,10 +8,16 @@
         //   "PackageIdentifier": "Nilesoft.Shell"
         // },
         {
+          "PackageIdentifier": "Justsenger.ExHyperV"
+        },
+        {
+          "PackageIdentifier": "OpenJS.NodeJS"
+        },
+        {
           "PackageIdentifier": "Zen-Team.Zen-Browser.Twilight"
         },
         {
-          "PackageIdentifier": "surge-downloader.surge"
+          "PackageIdentifier": "yorukot.superfile"
         },
         {
           "PackageIdentifier": "aelassas.Servy"
