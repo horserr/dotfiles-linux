@@ -1,6 +1,30 @@
 {
   "$help": "https://aka.ms/terminal-documentation",
   "$schema": "https://aka.ms/terminal-profiles-schema-preview",
+  // shift & setting 打开json文件
+  // alt & setting 生成默认的setting文件
+
+  "alwaysShowNotificationIcon": true,
+  "centerOnLaunch": true,
+  "compatibility.allowHeadless": false,
+  "copyFormatting": "all",
+  "copyOnSelect": true,
+  "defaultInputScope": "alphanumericHalfWidth",
+  "defaultProfile": "{a3a2e83a-884a-5379-baa8-16f193a13b21}",
+  "experimental.enableColorSelection": true,
+  "initialCols": 108,
+  "initialRows": 24,
+  "language": "en-US",
+  "launchMode": "default",
+  "minimizeToNotificationArea": false,
+  "newTabPosition": "afterCurrentTab",
+  "searchWebDefaultQueryUrl": "https://www.duckduckgo.com/search?q=%s",
+  "showTabsFullscreen": false,
+  "showTabsInTitlebar": true,
+  "snapToGridOnResize": false,
+  "tabWidthMode": "compact",
+  "theme": "system",
+  "useAcrylicInTabRow": false,
   "actions": [
     {
       "command": {
@@ -26,26 +50,6 @@
       "id": "User.find"
     }
   ],
-  "alwaysShowNotificationIcon": true,
-  "centerOnLaunch": true,
-  "compatibility.allowHeadless": false,
-  "copyFormatting": "all",
-  "copyOnSelect": true,
-  "defaultInputScope": "alphanumericHalfWidth",
-  "defaultProfile": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
-  "experimental.enableColorSelection": true,
-  "initialCols": 108,
-  "initialRows": 24,
-  "searchWebDefaultQueryUrl": "https://www.duckduckgo.com/search?q=%s",
-  "showTabsFullscreen": false,
-  "showTabsInTitlebar": true,
-  "snapToGridOnResize": false,
-  "tabWidthMode": "compact",
-  "theme": "system",
-  "language": "en-US",
-  "launchMode": "default",
-  "minimizeToNotificationArea": false,
-  "useAcrylicInTabRow": false,
   "keybindings": [
     {
       "id": "User.copy.644BA8F2",
@@ -82,24 +86,8 @@
       "inline": "auto",
       "name": "SSH",
       "type": "folder"
-    },
-    {
-      "allowEmpty": false,
-      "entries": [
-        {
-          "commandline": null,
-          "name": null,
-          "source": "Windows.Terminal.SSH",
-          "type": "matchProfiles"
-        }
-      ],
-      "icon": "",
-      "inline": "auto",
-      "name": "SSH",
-      "type": "folder"
     }
   ],
-  "newTabPosition": "afterCurrentTab",
   "profiles": {
     "defaults": {
       "colorScheme": "One Half Dark",
@@ -114,6 +102,11 @@
       "useAcrylic": true
     },
     "list": [
+      {
+        "commandline": "ssh -t horserr@nvidia-desktop.local \"exec bash -l\" ",
+        "guid": "{f1e4888b-f455-4a17-a7fc-8a5b618ef0f6}",
+        "name": "hello terminal"
+      },
       {
         "commandline": "%SystemRoot%\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
         "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
@@ -134,13 +127,13 @@
       },
       {
         "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
-        "hidden": false,
+        "hidden": true,
         "name": "PowerShell",
         "source": "Windows.Terminal.PowershellCore"
       },
       {
         "guid": "{359e6435-9f2b-536a-b4d3-accf4d596fcc}",
-        "hidden": false,
+        "hidden": true,
         "name": "SSH - TEMPLATE",
         "source": "Windows.Terminal.SSH"
       },
@@ -172,7 +165,8 @@
         "guid": "{a3a2e83a-884a-5379-baa8-16f193a13b21}",
         "hidden": false,
         "name": "PowerShell 7 Preview",
-        "source": "Windows.Terminal.PowershellCore"
+        "source": "Windows.Terminal.PowershellCore",
+        "tabTitle": "Preview"
       },
       {
         "guid": "{7beecf27-bd98-589a-b8cc-08742a710dec}",
