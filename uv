@@ -13,6 +13,10 @@ default = true
 
 # 设置备选镜像源
 [[index]]
+name = "nju"
+url = "https://mirrors.nju.edu.cn/pypi/web/simple/"
+
+[[index]]
 name = "aliyun"
 url = "https://mirrors.aliyun.com/pypi/simple/"
 
