@@ -1,0 +1,25 @@
+[core]
+	pager = delta
+[user]
+	name = horserr
+	email = 112157036+horserr@users.noreply.github.com
+[alias]
+	st = status --short
+	l = log --oneline
+	b = branch
+	ck = checkout
+	no-edit = commit --amend --no-edit
+	d = difftool --dir-diff
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+    navigate = true  # use n and N to move between diff sections
+    dark = true      # or light = true, or omit for auto-detection
+[merge]
+    conflictStyle = zdiff3
+[init]
+	defaultBranch = main
+[http]
+	proxy = http://localhost:7897
+[https]
+	proxy = http://localhost:7897

@@ -1,0 +1,31 @@
+{{- $ephemeral := false -}}{{/* true if this machine is ephemeral, e.g. a cloud or VM instance */}}
+{{- $work := false -}}{{/* true if this machine is a work machine */}}
+{{- $headless := false -}}{{/* true if this machine does not have a screen and keyboard */}}
+{{- $personal := false -}}{{/* true if this machine should have personal secrets */}}
+
+{{/* detect GitHub codespaces, VSCode remote containers, Docker containers */}}
+{{- if or (env "CODESPACES") (env "REMOTE_CONTAINERS_IPC") (eq .chezmoi.username "root" "ubuntu" "vscode") -}}
+{{-   $ephemeral = true -}}
+{{-   $headless = true -}}
+{{- end -}}
+
+{{- if eq .chezmoi.hostname "ASUSCosmos" -}}
+{{-   $personal = true -}}
+{{- end -}}
+
+[data]
+    personal = {{ $personal }}
+    ephemeral = {{ $ephemeral }}
+    work = {{ $work }}
+    headless = {{ $headless }}
+
+[diff]
+    command = "delta"          # 使用 delta 代替默认 diff，显示更美观
+
+    # Don't show scripts that would run in chezmoi diff/chezmoi status
+    # link: https://www.chezmoi.io/user-guide/use-scripts-to-perform-actions/#dont-show-scripts-that-would-run-in-chezmoi-diffchezmoi-status
+    exclude = ["scripts"]
+
+[merge]
+    command = "nvim"
+    args = ["-d", ".Destination", ".Source", ".Target"]

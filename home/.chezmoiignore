@@ -1,0 +1,9 @@
+{{- if ne .chezmoi.os "windows" }}
+.chezmoiscripts/windows/**
+powershell/ # only manage .work on windows
+.config/windows-terminal.json
+{{- end }}
+
+{{- if ne .chezmoi.os "linux" }}
+.chezmoiscripts/linux/**
+{{- end }}

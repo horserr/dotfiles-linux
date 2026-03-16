@@ -1,0 +1,32 @@
+{
+	// Place your snippets for ahk2 here. Each snippet is defined under a snippet name and has a prefix, body and
+	// description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the
+	// same ids are connected.
+	// Example:
+	// "Print to console": {
+	// 	"prefix": "log",
+	// 	"body": [
+	// 		"console.log('$1');",
+	// 		"$2"
+	// 	],
+	// 	"description": "Log output to console"
+	// }
+	"current script runner": {
+		"prefix": "main",
+		"body": [
+			"If (A_LineFile = A_ScriptFullPath) {",
+			"  $1",
+			"}$0",
+			""
+		],
+		"description": "setup the test script"
+	},
+	"parent folder": {
+		"prefix": "parent folder",
+		"body": [
+			"SplitPath(${1:A_ScriptDir}, , &parentDir)"
+		],
+		"description": "get the parent folder of the current script"
+	}
+}

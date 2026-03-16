@@ -1,0 +1,4 @@
+Host web-*
+    User www-data
+    IdentityFile ~/.ssh/web_server_key
+    Port 22

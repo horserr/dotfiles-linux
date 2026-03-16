@@ -1,0 +1,57 @@
+Host *
+  StrictHostKeyChecking ask
+  HashKnownHosts yes      # 隐藏我去过哪儿，更安全
+  AddKeysToAgent yes      # 只要解开一次，这阵子就别再问我密码
+
+  {{- if eq .chezmoi.os "darwin" }}
+  UseKeychain yes         # (仅限mac) 把密码托付给系统，重启也不怕
+  {{- end }}
+
+  ServerAliveInterval 30
+  ServerAliveCountMax 3   # 3 次无响应则断开
+
+  {{- if ne .chezmoi.os "windows" }}
+  ControlMaster auto    # 自动启用连接复用
+  ControlPath ~/.ssh/master_%h_%p_%r  # 复用连接的 socket 文件路径
+  ControlPersist 1m
+  {{ end }}
+
+Host local
+  HostName localhost
+
+{{ if .personal }}
+{{ include "dot_ssh/config.d/platform_config" }}
+
+# need to turn on tailscale
+Host termux
+  HostName samsung
+  User u0_a737
+  Port 8022
+{{- end }}
+
+{{- if .work }}
+{{ include "dot_ssh/config.d/work_config" }}
+{{- end }}
+
+Host Nvidia
+  HostName nvidia-desktop.local
+  User nvidia
+  ForwardAgent yes
+
+Host horserr
+  HostName nvidia-desktop.local
+  User horserr
+  ForwardAgent yes
+
+
+# 基本连接：Host、HostName、User、Port
+# 密钥与代理：IdentityFile、IdentitiesOnly、AddKeysToAgent、IdentityAgent、ForwardAgent
+# 跳板/代理：ProxyJump (JumpHost)、ProxyCommand
+# 保活：ServerAliveInterval、ServerAliveCountMax、TCPKeepAlive
+# 连接复用：ControlMaster、ControlPath、ControlPersist
+# 安全与日志：StrictHostKeyChecking、UserKnownHostsFile、HashKnownHosts、LogLevel
+# 算法与压缩：Ciphers、KexAlgorithms、HostKeyAlgorithms、Compression
+# 转发：LocalForward、RemoteForward、DynamicForward (SOCKS)
+# TTY/命令：RequestTTY、RemoteCommand、PermitLocalCommand、LocalCommand
+# 选择与拆分：Match、Include、CanonicalizeHostname、CanonicalDomains
+# 认证方式：PreferredAuthentications、GSSAPIAuthentication
