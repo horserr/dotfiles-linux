@@ -1,9 +1,10 @@
 {{- if ne .chezmoi.os "windows" }}
 .chezmoiscripts/windows/**
-powershell/ # only manage .work on windows
-.config/windows-terminal.json
+powershell/
+.docker/
 {{- end }}
 
 {{- if ne .chezmoi.os "linux" }}
 .chezmoiscripts/linux/**
+.bashrc
 {{- end }}

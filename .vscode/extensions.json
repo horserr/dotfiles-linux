@@ -1,3 +1,7 @@
 {
-  "recommendations": ["ms-vscode.powershell", "romantomjak.go-template"]
+  "recommendations": [
+    "ms-vscode.powershell",
+    "romantomjak.go-template",
+    "mads-hartmann.bash-ide-vscode"
+  ]
 }
