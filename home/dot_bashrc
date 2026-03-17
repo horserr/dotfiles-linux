@@ -125,3 +125,37 @@ export HOMEBREW_BOTTLE_DOMAIN="https://mirrors.tuna.tsinghua.edu.cn/homebrew-bot
 
 # 如果你需要运行 brew 的开发命令或安装在非默认路径，建议也加上 core 源
 export HOMEBREW_CORE_GIT_REMOTE="https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git"
+
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
+# windows proxy
+# WSL 代理配置函数
+function proxy() {
+    # 动态获取 Windows 宿主机 IP
+    local host_ip=$(ip route show | grep default | awk '{print $3}')
+    # 也可以使用 powershell 获取：local host_ip=$(powershell.exe -Command "ipconfig" | grep "IPv4" | head -n 1 | awk '{print $NF}' | tr -d '\r')
+
+    local port=7897 # 你的 Clash Verge 端口
+
+    case $1 in
+        on)
+            export http_proxy="http://$host_ip:$port"
+            export https_proxy="http://$host_ip:$port"
+            export all_proxy="socks5://$host_ip:$port"
+            echo -e "代理已开启"
+            echo -e "Windows IP: $host_ip"
+            echo -e "Proxy Port: $port"
+            ;;
+        off)
+            unset http_proxy https_proxy all_proxy
+            echo -e "代理已关闭"
+            ;;
+        status)
+            echo "http_proxy  : $http_proxy"
+            echo "https_proxy : $https_proxy"
+            ;;
+        *)
+            echo "使用方法: proxy [on|off|status]"
+            ;;
+    esac
+}
