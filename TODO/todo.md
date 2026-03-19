@@ -62,10 +62,13 @@ exit 1
 fi
 ```
 
-## 检查程序是否已安装
+## 更新与completion
 
 ```bash
-if command -v "$app" >/dev/null 2>&1; then
-  echo "✅ $app 已安装，跳过"
-fi
+uv generate-shell-completion fish > ~/.config/fish/completions/uv.fish
 ```
+
+```bash
+uvx generate-shell-completion fish > ~/.config/fish/completions/uvx.fish
+```
+

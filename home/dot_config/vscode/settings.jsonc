@@ -111,12 +111,10 @@
   "workbench.editor.openPositioning": "right",
   "workbench.editor.showTabIndex": true,
   "workbench.editor.enablePreviewFromQuickOpen": true,
-  // "window.menuStyle": "custom",
   "window.openFilesInNewWindow": "default",
   "window.openFoldersInNewWindow": "default",
   "window.titleSeparator": " 📍 ",
   "window.title": "${dirty}😉${rootNameShort}${separator}${activeEditorShort}",
-  // "window.menuStyle": "inherit",
   "window.commandCenter": false,
   "window.confirmBeforeClose": "keyboardOnly",
   "window.confirmSaveUntitledWorkspace": false,
@@ -240,18 +238,9 @@
   "github.copilot.chat.languageContext.typescript.enabled": true,
   "github.copilot.chat.scopeSelection": true,
   "github.copilot.enable": {
-    "*": true,
-    "plaintext": false,
-    "markdown": false,
-    "scminput": false,
+    "*": false,
     "ahk2": true,
-    "jsonc": false,
-    "sql": false,
-    "typst": false,
-    "go": false,
-    "shellscript": false,
-    "powershell": true,
-    "python": false
+    "powershell": true
   },
   "github.copilot.nextEditSuggestions.enabled": true,
   "github.copilot.nextEditSuggestions.fixes": true,
@@ -1209,7 +1198,6 @@
   "dbcode.history.enabled": true,
   "extensions.autoUpdate": true,
   "extensions.autoCheckUpdates": true,
-  "update.enableWindowsBackgroundUpdates": false,
   "remote.SSH.lockfilesInTmp": true,
   "remote.SSH.remoteServerListenOnSocket": true,
   "remote.SSH.connectTimeout": 300,
@@ -1413,11 +1401,12 @@
   "python.analysis.diagnosticSeverityOverrides": {
     "reportUnusedImport": "information" // 将未使用的导入标记为蓝色信息而非警告
   },
+  "python.analysis.exclude": ["**/node_modules", "**/venv", "**/.git"],
   "chat.fontSize": 17,
   "chat.fontFamily": "LXGW Wenkai",
   "chat.agent.thinking.collapsedTools": "withThinking",
   "terminal.external.windowsExec": "wt",
-  "markdown.styles": [".vscode/custom-style.css"],
+  // "markdown.styles": [".vscode/custom-style.css"],
   "[vue]": {
     "editor.defaultFormatter": "Vue.volar"
   },
@@ -1469,9 +1458,8 @@
   },
   "diffEditor.ignoreTrimWhitespace": true,
   "github.copilot.nextEditSuggestions.extendedRange": true,
-  "chat.viewSessions.orientation": "stacked",
   "diffEditor.hideUnchangedRegions.enabled": true,
-  "markdown.extension.preview.autoShowPreviewToSide": true,
+  // "markdown.extension.preview.autoShowPreviewToSide": true,
   "markdowntable.showMenu.csvToTable": true,
   "xlsxViewer.md.stickyToolbar": true,
   "xlsxViewer.md.wordWrap": true,
@@ -1489,5 +1477,8 @@
   },
   "workbench.editor.useModal": "some",
   "terminal.integrated.enableImages": true,
-  "chat.tools.terminal.sandbox.enabled": true
+  "chat.viewProgressBadge.enabled": true,
+  "chat.viewSessions.orientation": "stacked",
+  "chat.tools.terminal.sandbox.enabled": true,
+  "update.enableWindowsBackgroundUpdates": true
 }

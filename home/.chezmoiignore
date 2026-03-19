@@ -7,4 +7,5 @@ powershell/
 {{- if ne .chezmoi.os "linux" }}
 .chezmoiscripts/linux/**
 .bashrc
+.cargo
 {{- end }}

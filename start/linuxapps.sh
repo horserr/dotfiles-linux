@@ -5,11 +5,11 @@ essentials=(
   "file"
   "git"
   "fish"
-  # "openssh-server"
+  "openssh-server"
+  "neovim"
 )
 
 userapps=(
-  "neovim"
   "chezmoi"
   "gh"
   "fzf"
@@ -21,7 +21,7 @@ userapps=(
   "tldr"
   "btop"
   "lazygit"
-  "yazi"
+   "yazi"
   "ffmpeg"
   "7zip"
   "jq"
