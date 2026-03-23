@@ -79,8 +79,11 @@ export RUSTUP_UPDATE_ROOT="https://rsproxy.cn/rustup"
 ensure_installed 'rustup' "curl --proto '=https' --tlsv1.2 -sSf https://rsproxy.cn/rustup-init.sh | sh"
 
 # install nvm
-# echo -e "${GREEN}准备安装nvm...${NC}"
-# ensure_installed 'nvm' "https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash"
+echo -e "${GREEN}准备安装nvm...${NC}"
+ensure_installed 'nvm' "https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 
 # install uv
 echo -e "${GREEN}准备安装uv...${NC}"
@@ -94,6 +97,13 @@ install_apps brew "${userapps[@]}"
 echo -e "${GREEN}deploying chezmoi...${NC}"
 chezmoi init
 chezmoi apply
+
+# install fisher
+echo -e "${GREEN}install fisher...${NC}"
+curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher
+
+# 安装nvm插件
+fisher install jorgebucaran/nvm.fish
 
 echo -e "${GREEN}切换shell为fish...${NC}"
 chsh -s $(which fish)

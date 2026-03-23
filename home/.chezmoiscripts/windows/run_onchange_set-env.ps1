@@ -35,19 +35,19 @@ $cacheFolder = (Resolve-Path -Path $cacheFolder).Path
 # python uv
 # ------------------------
 
-$targetUv = "$cacheFolder\uv"
-optionCreate -folder $targetUv
-$targetUv = (Resolve-Path -Path $targetUv).Path
+# $targetUv = "$cacheFolder\uv"
+# optionCreate -folder $targetUv
+# $targetUv = (Resolve-Path -Path $targetUv).Path
 
-$uvCacheDir = "$targetUv\cache"
-$uvPythonDir = "$targetUv\python"
-$uvToolsDir = "$targetUv\tool"
-optionCreate -folder $uvCacheDir
-optionCreate -folder $uvPythonDir
-optionCreate -folder $uvToolsDir
-setEnv -name "UV_CACHE_DIR" -value $uvCacheDir -target "User"
-setEnv -name "UV_PYTHON_INSTALL_DIR" -value $uvPythonDir -target "User"
-setEnv -name "UV_TOOL_DIR" -value $uvToolsDir -target "User"
+# $uvCacheDir = "$targetUv\cache"
+# $uvPythonDir = "$targetUv\python"
+# $uvToolsDir = "$targetUv\tool"
+# optionCreate -folder $uvCacheDir
+# optionCreate -folder $uvPythonDir
+# optionCreate -folder $uvToolsDir
+# setEnv -name "UV_CACHE_DIR" -value $uvCacheDir -target "User"
+# setEnv -name "UV_PYTHON_INSTALL_DIR" -value $uvPythonDir -target "User"
+# setEnv -name "UV_TOOL_DIR" -value $uvToolsDir -target "User"
 
 # ------------------------
 # huggingface endpoint
@@ -65,14 +65,14 @@ setEnv -name "RUSTUP_UPDATE_ROOT" -value $rustupRoot -target "User"
 # ------------------------
 # bun
 # ------------------------
-$targetBun = "$cacheFolder\.bun"
-optionCreate -folder $targetBun
-$targetBun = (Resolve-Path -Path $targetBun).Path
-$targetBunCache = "$targetBun\cache"
-optionCreate -folder $targetBunCache
+# $targetBun = "$cacheFolder\.bun"
+# optionCreate -folder $targetBun
+# $targetBun = (Resolve-Path -Path $targetBun).Path
+# $targetBunCache = "$targetBun\cache"
+# optionCreate -folder $targetBunCache
 
-setEnv -name "BUN_INSTALL" -value $targetBun -target "User"
-setEnv -name "BUN_INSTALL_CACHE" -value $targetBunCache -target "User"
+# setEnv -name "BUN_INSTALL" -value $targetBun -target "User"
+# setEnv -name "BUN_INSTALL_CACHE" -value $targetBunCache -target "User"
 
 # ------------------------
 # Winget Links

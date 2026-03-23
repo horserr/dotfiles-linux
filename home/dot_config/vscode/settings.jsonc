@@ -1436,7 +1436,7 @@
   "gitlens.currentLine.fontSize": 16,
   "python.analysis.typeEvaluation.strictDictionaryInference": true,
   "python.analysis.typeEvaluation.strictSetInference": true,
-  "python.terminal.activateEnvInCurrentTerminal": true,
+  // "python.terminal.activateEnvInCurrentTerminal": true,
   "github.copilot.chat.notebook.enhancedNextEditSuggestions.enabled": true,
   "github.copilot.chat.tools.memory.enabled": true,
   "python-envs.terminal.autoActivationType": "shellStartup",
@@ -1480,5 +1480,6 @@
   "chat.viewProgressBadge.enabled": true,
   "chat.viewSessions.orientation": "stacked",
   "chat.tools.terminal.sandbox.enabled": true,
+  "chat.mcp.gallery.enabled": true,
   "update.enableWindowsBackgroundUpdates": true
 }
