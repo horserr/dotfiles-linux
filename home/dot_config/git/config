@@ -20,17 +20,24 @@
 [user]
 	name = horserr
 	email = 112157036+horserr@users.noreply.github.com
+  signingkey = ~/.ssh/id_ed25519.pub
 [init]
 	defaultBranch = main
 [help]
 	# Automatically correct and execute mistyped commands.
 	autocorrect = 1
+[gpg]
+	format = ssh
 [branch]
 	# Show most recently changed branches first.
 	sort = -committerdate
 [apply]
 	# Detect whitespace errors when applying a patch.
 	whitespace = fix
+[commit]
+  gpgsign = true
+[tag]
+  gpgsign = true
 
 #******************
 #* MERGE AND DIFF *
