@@ -1,4 +1,3 @@
-{{ if not .personal }}
-.ssh
-.ssh/**
+{{ if not .isWSL }}
+.vscode-server/
 {{ end }}

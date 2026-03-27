@@ -1,0 +1,1 @@
+- vscode server run on change to install extentions from extension list

@@ -1,0 +1,5 @@
+{
+  "$schema": "vscode://schemas/settings/user",
+  "http.useLocalProxyConfiguration": false,
+  "workbench.colorTheme": "Vira Teal High Contrast"
+}
