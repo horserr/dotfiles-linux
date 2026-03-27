@@ -1,1 +1,2 @@
 - vscode server run on change to install extentions from extension list
+- use chezmoi to manage external plugin manager, like fisher and tmux plugin
