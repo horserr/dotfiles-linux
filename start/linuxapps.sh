@@ -7,10 +7,14 @@ essentials=(
   "fish"
   "openssh-server"
   "neovim"
+  "ffmpeg"
+  "7zip"
+  "jq"
+  "poppler"
+  "imagemagick"
 )
 
 userapps=(
-  "chezmoi"
   "gh"
   "fzf"
   "bat"
@@ -21,10 +25,5 @@ userapps=(
   "tldr"
   "btop"
   "lazygit"
-   "yazi"
-  "ffmpeg"
-  "7zip"
-  "jq"
-  "poppler"
-  "imagemagick"
+  "yazi"
 )

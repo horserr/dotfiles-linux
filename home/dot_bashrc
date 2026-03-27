@@ -118,14 +118,6 @@ fi
 
 . "$HOME/.local/bin/env"
 
-# Homebrew 清华源配置
-export HOMEBREW_API_DOMAIN="https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles/api"
-export HOMEBREW_BREW_GIT_REMOTE="https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git"
-export HOMEBREW_BOTTLE_DOMAIN="https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles"
-
-# 如果你需要运行 brew 的开发命令或安装在非默认路径，建议也加上 core 源
-export HOMEBREW_CORE_GIT_REMOTE="https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git"
-
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 # windows proxy

@@ -1,11 +1,4 @@
-{{- if ne .chezmoi.os "windows" }}
-.chezmoiscripts/windows/**
-powershell/
-.docker/
-{{- end }}
-
-{{- if ne .chezmoi.os "linux" }}
-.chezmoiscripts/linux/**
-.bashrc
-.cargo
-{{- end }}
+{{ if not .personal }}
+.ssh
+.ssh/**
+{{ end }}

@@ -19,14 +19,3 @@ sourceDir = "~/.config/.dotfiles"
     ephemeral = {{ $ephemeral }}
     work = {{ $work }}
     headless = {{ $headless }}
-
-[diff]
-    command = "delta"          # 使用 delta 代替默认 diff，显示更美观
-
-    # Don't show scripts that would run in chezmoi diff/chezmoi status
-    # link: https://www.chezmoi.io/user-guide/use-scripts-to-perform-actions/#dont-show-scripts-that-would-run-in-chezmoi-diffchezmoi-status
-    exclude = ["scripts"]
-
-[merge]
-    command = "nvim"
-    args = ["-d", ".Destination", ".Source", ".Target"]

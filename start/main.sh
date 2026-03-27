@@ -102,9 +102,6 @@ chezmoi apply
 echo -e "${GREEN}install fisher...${NC}"
 curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher
 
-# 安装nvm插件
-fisher install jorgebucaran/nvm.fish
-
 echo -e "${GREEN}切换shell为fish...${NC}"
 chsh -s $(which fish)
 

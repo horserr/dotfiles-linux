@@ -1,9 +1,15 @@
 {
   "recommendations": [
-    "ms-vscode.powershell",
     "romantomjak.go-template",
     "mads-hartmann.bash-ide-vscode",
     "bmalehorn.vscode-fish",
-    "redhat.vscode-yaml"
+    "redhat.vscode-yaml",
+    "chrislajoie.vscode-modelines",
+    "tamasfe.even-better-toml"
+  ],
+  "unwantedRecommendations": [
+    "ms-vscode.vscode-node-azure-pack",
+    "DavidAnson.vscode-markdownlint",
+    "donjayamanne.githistory"
   ]
 }
