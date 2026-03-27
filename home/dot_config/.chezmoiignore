@@ -1,8 +1,6 @@
-{{ if ne .chezmoi.os "windows" }}
-windows-terminal.json
-vscode/
-{{ end }}
-
-{{- if ne .chezmoi.os "linux" }}
-fish/
+{{- if not .isWSL }}
+gh/
+btop/
+homebrew/
+nvim/
 {{- end }}
