@@ -4,7 +4,7 @@ if status is-interactive
     alias ls 'eza --icons --group-directories-first'
     alias ll 'eza -lbgH --icons --git --group-directories-first'
     alias lt 'eza --tree --icons'
-    alias cat 'batcat'
+    alias cat 'bat'
     alias cd 'z'
     alias y 'yazi'
     alias top 'btop'
