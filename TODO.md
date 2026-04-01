@@ -4,3 +4,5 @@
 wsl中需要安装socat来配合windows上的npiperelay
 
 ssh config和windows的同步
+
+ssh 文件夹中的权限需要设置

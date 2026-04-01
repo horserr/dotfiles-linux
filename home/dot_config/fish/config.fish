@@ -1,25 +1,24 @@
-# WSL SSH Agent Bridge (Windows -> WSL)
-if status is-interactive
+# WSL SSH Agent Bridge
+if status is-interactive; and string match -qi "*microsoft*" </proc/sys/kernel/osrelease
+
     set -gx SSH_AUTH_SOCK "$HOME/.ssh/agent.sock"
 
-    # 检查 Socket 是否已经存在且有效
-    if not ss -lnx | grep -q "$SSH_AUTH_SOCK"
-        # 自动清理过时的无效 Socket 文件
-        rm -f "$SSH_AUTH_SOCK"
+    # 核心修改：先判断 ss 命令是否存在，再执行逻辑
+    if command -sq ss
+        if not ss -lnx | grep -q "$SSH_AUTH_SOCK"
+            rm -f "$SSH_AUTH_SOCK"
+            set -l npiperelay_path (command -v npiperelay.exe)
 
-        # 动态查找 Windows PATH 中的 npiperelay.exe
-        set -l npiperelay_path (command -v npiperelay.exe)
-
-        if test -n "$npiperelay_path"
-            # 使用 nohup 和 setsid 让进程在后台静默运行
-            # 这里的 2>/dev/null 是为了防止 socat 的启动输出干扰终端
-            nohup socat UNIX-LISTEN:"$SSH_AUTH_SOCK",fork \
-                EXEC:"$npiperelay_path -ei -s //./pipe/openssh-ssh-agent",nofork >/dev/null 2>&1 &
-
-            # 记得脱离任务控制，防止关闭 shell 时杀死进程
-            disown
-        else
-            echo "Warning: npiperelay.exe not found in Windows PATH."
+            if test -n "$npiperelay_path"
+                nohup socat UNIX-LISTEN:"$SSH_AUTH_SOCK",fork \
+                    EXEC:"$npiperelay_path -ei -s //./pipe/openssh-ssh-agent",nofork >/dev/null 2>&1 &
+                disown
+            end
+        end
+    else
+        # 如果没有 ss，也可以尝试用 test -S 判断 socket 文件是否存在（虽然没 ss 准确）
+        if not test -S "$SSH_AUTH_SOCK"
+            # 这里可以留空或者尝试基础逻辑
         end
     end
 end
