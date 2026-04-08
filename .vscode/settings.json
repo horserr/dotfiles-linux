@@ -1,7 +1,9 @@
 {
   "files.associations": {
     ".chezmoiignore": "gitignore",
-    "dot_bashrc": "shellscript"
+    "dot_bashrc": "shellscript",
+    "dot_vimrc": "Vimscript",
+    "dot_inputrc": "shellscript"
   },
   "peacock.remoteColor": "#215732",
   "workbench.colorCustomizations": {
