@@ -6,7 +6,7 @@ essentials=(
   "git"
   "fish"
   "openssh-server"
-  "neovim"
+  # "neovim"
   "ffmpeg"
   "7zip"
   "jq"

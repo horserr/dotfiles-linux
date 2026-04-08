@@ -45,7 +45,7 @@ NC='\033[0m'
 # change apt source
 echo -e "${GREEN}正在配置 APT 镜像源...${NC}"
 TARGET_FILE="/etc/apt/sources.list.d/ubuntu.sources"
-NEW_MIRROR="https://mirrors.nju.edu.cn/ubuntu/"
+NEW_MIRROR="https://mirrors.tuna.tsinghua.edu.cn/ubuntu/"
 sudo cp "$TARGET_FILE" "${TARGET_FILE}.bak"
 sudo sed -i "s|^URIs:.*|URIs: ${NEW_MIRROR}|g" "$TARGET_FILE"
 
