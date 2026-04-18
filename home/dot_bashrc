@@ -118,7 +118,13 @@ fi
 
 . "$HOME/.local/bin/env"
 
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+if command -v brew; then
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
+
+if command -v pixi; then
+    eval "$(pixi completion --shell bash)"
+fi
 
 export RUSTUP_DIST_SERVER="https://rsproxy.cn"
 export RUSTUP_UPDATE_ROOT="https://rsproxy.cn/rustup"

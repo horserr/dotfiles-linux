@@ -14,3 +14,18 @@ chmod 644 ~/.ssh/*.pub
 git gpg.ssh.allowedSignersFile
 
 git config --global gpg.ssh.allowedSignersFile "~/.config/git/allowed_signers"
+
+安装 azure cli
+```sh
+curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+```
+
+安装 nix
+```sh
+sh <(curl --proto '=https' --tlsv1.2 -L https://nixos.org/nix/install) --daemon
+```
+
+安装 pixi
+```sh
+curl -fsSL https://pixi.sh/install.sh | bash
+```

@@ -1,17 +1,5 @@
 essentials=(
-  "build-essential"
-  "curl"
-  "procps"
-  "file"
-  "git"
-  "fish"
   "openssh-server"
-  # "neovim"
-  "ffmpeg"
-  "7zip"
-  "jq"
-  "poppler"
-  "imagemagick"
 )
 
 userapps=(

@@ -24,5 +24,9 @@ if status is-interactive; and string match -qi "*microsoft*" </proc/sys/kernel/o
 end
 
 # vscode shell integration
-string match -q "$TERM_PROGRAM" "vscode"
+string match -q "$TERM_PROGRAM" vscode
 and . (code --locate-shell-integration-path fish)
+
+if command -sq pixi
+    pixi completion --shell fish | source
+end
