@@ -1,5 +1,5 @@
-set -gx EDITOR nvim
-set -gx VISUAL nvim
+set -gx EDITOR vim
+set -gx VISUAL vim
 
 set -gx RUSTUP_DIST_SERVER https://rsproxy.cn
 set -gx RUSTUP_UPDATE_ROOT https://rsproxy.cn/rustup
