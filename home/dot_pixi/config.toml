@@ -13,16 +13,21 @@ default-channels = ["pytorch", "nvidia", "conda-forge"]
 "https://conda.anaconda.org/nvidia" = [
     "https://mirrors.sustech.edu.cn/anaconda-extra/cloud/nvidia/",
 ]
+"https://pypi.org/simple" = [
+    "https://mirrors.nju.edu.cn/pypi/web/simple/",
+    "https://pypi.tuna.tsinghua.edu.cn/simple/",
+]
+"https://files.pythonhosted.org/packages" = [
+    "https://mirrors.nju.edu.cn/pypi/web/packages/",
+    "https://pypi.tuna.tsinghua.edu.cn/packages/",
+]
+"https://pypi.nvidia.com/" = ["https://pypi.nvidia.cn"]
+"https://download.pytorch.org" = ["https://mirrors.nju.edu.cn/pytorch"]
 
 [pypi-config]
 # Main index url
 index-url = "https://pypi.org/simple"
 # list of additional urls
-extra-index-urls = [
-    "https://mirrors.nju.edu.cn/pypi/web/simple/",
-    "https://mirrors.ustc.edu.cn/pypi/simple/",
-    "https://pypi.tuna.tsinghua.edu.cn/simple",
-    "https://pypi.nvidia.cn/",
-]
+extra-index-urls = ["https://pypi.nvidia.com/"]
 # allow insecure connections to host
 allow-insecure-host = ["localhost:8080"]
