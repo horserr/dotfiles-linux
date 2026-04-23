@@ -1,0 +1,200 @@
+# code: language=ini
+# Note: set this environment variable to debug git
+# GIT_TRACE=true
+# GIT_TRACE_SETUP =true
+# GIT_TRACE_PERFORMANCE=true
+[alias]
+	repo = clone --depth 1
+	w = worktree
+
+	# log
+	l = log --pretty=oneline --graph --abbrev-commit --no-merges
+	la = log --all --pretty=oneline --graph --abbrev-commit --no-merges
+	# log conflicted commit messages
+	lm = log --oneline --left-right --merge
+	# REALLY usefule to find conflict commits
+	lmm = log --oneline --left-right --merge --patch
+	# log bifurcated(fork) commits
+	lfork = log --oneline --left-right HEAD...MERGE_HEAD
+
+	# git grep
+  g = grep --show-function --line-number  # -p
+  gcount = grep --count
+	# log pickaxe
+  # usage: git log -S ZLIB_BUF_MAX --oneline
+	p = log --pretty=oneline --abbrev-commit -S
+	pp = log --no-merges --stat --regexp-ignore-case -G
+	# log line: REALLY useful and amazing
+  # usage: git log -L :git_deflate_bound:zlib.c
+	h = log --oneline --no-patch -L
+	hh = log --oneline -L
+
+	# show and status
+	s = status --short --branch
+	sd = diff --stat --ignore-space-change
+	# what to be committed: diff between staged and the repo
+	sdd = diff --stat --ignore-space-change --staged
+	# show progress
+	spro = describe --tags --always
+	# show tag: followed by standard shell regex
+	stag = tag -l
+	# show conflict files
+	sconflict = diff --name-only --diff-filter=U
+	# show base
+	sbase  = "!f() { git show :1:$1; }; f"
+	# show ours
+	sours = "!f() { git show :2:$1; }; f"
+	# show theirs
+	stheirs = "!f() { git show :3:$1; }; f"
+	sb = branch --verbose
+	sbb = branch --verbose --all
+	# show merged branches
+	sbmerge = branch --merged
+
+	a = add --update
+  au = add --intent-to-add .
+	aa = add .
+	aaa = add --all
+
+	b = blame -C -L
+
+	c = commit
+	ca = commit --all
+	cam = commit --amend
+	cne = commit --amend --no-edit
+	cemp = commit --allow-empty
+
+	# what modified: diff between working dir and staged
+	d = diff --ignore-space-change
+	# what to be committed: diff between staged and the repo
+	dd = diff --ignore-space-change --staged
+	# diff between
+	ddd = diff --ignore-space-change HEAD
+	dt = difftool
+	dw = diff --word-diff --ignore-space-change
+	# 对比两边的原始版本
+	dours = diff --ours
+	dtheirs = diff --theirs
+	# 在还没开始改代码前，搞清楚对方的分支到底动了哪些文件
+	dfork = diff HEAD...MERGE_HEAD
+
+	# clean untracked files
+	x = clean --dry-run
+	xx = clean --force
+	# clean ignored files or folders
+	xi = clean -X --dry-run
+	xxi = clean -X --force
+	# clean untracked directories
+	xd = clean -d --dry-run
+	xxd = clean -d --force
+
+	# interactive add/stage
+	ia = add --patch
+  iaa = add --interactive
+  # Interactive rebase with the given number of latest commits.
+	ir = rebase --interactive
+	# interactive unstage
+	iu = reset --patch
+	# interactive stash
+	is = stash --patch
+	ik = stash --patch
+	# Note: do not use: checkout --patch
+	# interactivly clean ignored files or folders
+	ix = clean -X --interactive
+
+	# jump = switch
+	j = switch
+	jc = switch --create
+
+  # k for keep, the sysnonym of stash
+	k = stash
+	kb = stash branch
+	# keep index
+	ki = stash --keep-index
+	kk = stash --include-untracked # shortfor -u
+	# all files, including ignored files
+	kkk = stash --all
+
+	m = merge -Xignore-space-change
+	# use ours
+	mours = merge -Xours
+	re-merge = restore --conflict=merge
+
+	unstage = restore --staged
+	alias = config --get-regexp alias
+
+	lost-found = fsck --lost-found
+	freeze = update-index --assume-unchanged
+	# todo
+	# continue = rebase --continue
+	# abort = rebase --abort
+
+	pick = cherry-pick
+
+	depth = fetch --depth
+	deepen = fetch --deepen
+	shallow-since = fetch --shallow-since
+	unshallow = fetch --unshallow
+
+	conf = config --global --edit
+	confl = config --local --edit
+	whoami = config user.email
+
+	# plumbing commands
+	cat = cat-file -p
+	# -r: recursive, -t: tree node, -l: show size
+	lstree = ls-tree -r -t -l --abbrev # --name-only
+	# list Index
+	lsfile = ls-files
+	lsignore = ls-files --others --ignored
+	lsconflict = ls-file --unmerged # -u
+	mergefile = merge-file -p # ours common theirs
+
+	; root = "!cd $(git rev-parse --show-toplevel)"
+	root = rev-parse --show-toplevel
+	dir = rev-parse --show-prefix
+	is-shallow = rev-parse --is-shallow-repository
+	test-date = rev-parse --since
+
+
+	# Note: the difference between ls-tree and ls-files:
+		# ls-tree is applied to a specific commit or tree object
+		# ls-files is applied to the Index(the staged files)
+
+	# Find branches containing commit
+	fb = "!f() { git branch -a --contains $1; }; f"
+
+	# Find tags containing commit
+	ft = "!f() { git describe --always --contains $1; }; f"
+
+  # git log origin/main..HEAD  # show what is about to push
+  # git log origin/main..      # for simplicity
+	# show remote <name>
+	# git fetch origin --prune/p <branch>
+	# git push origin --delete <branch>
+	# git filter-repo
+	# git archive
+
+	############
+	# git reflog is equivalent to git log -g/--walk-reflogs --abbrev-commit --pretty=oneline
+	# git subtree
+	# git submodule
+	# git rev-parse <branch>
+	# 一次性删除所有已经在 .gitignore 中声明、但之前不小心提交到仓库的文件
+	# git ls-files -i --exclude-standard | xargs git rm --cached
+
+# @ is equivalent to HEAD
+# e.g. git reset @~
+# Upstream shorthand @{u}
+# @{-n} the n-before branch, note that - is equivalent to @{-1}
+# ORIG_HEAD
+# FETCH_HEAD
+# MERGE_HEAD
+# git show :/fix-bug
+# @:./file.txt
+
+# | 对象类型      | 用法示例                     | 效果                                 |
+# | :------------ | :--------------------------- | :----------------------------------- |
+# | Blob (文件)   | 存储项目规范、公钥、法务声明 | git show tag-name 直接看文档内容     |
+# | Tree (文件夹) | 记录某个瞬间的目录树快照     | 绕过提交历史，只保存文件结构         |
+# | Tag (标签)    | 给标签打标签（Nested Tag）   | 记录对某个发布版本的“二次背书”或审计 |

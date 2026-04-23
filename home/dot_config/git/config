@@ -1,12 +1,12 @@
+# code: language=ini
 # adapted from: https://github.com/mathiasbynens/dotfiles/blob/main/.gitconfig
 
 #******************
 #* CORE AND BASIC *
 #******************
 [core]
- 	# Use custom `.gitignore` and `.gitattributes`.
-	excludesfile = ~/.gitignore
-	attributesfile = ~/.gitattributes
+	# excludesfile is default to $XDG_CONFIG_HOME/git/ignore
+	# attributesfile is default to $XDG_CONFIG_HOME/git/attributes
 
 	# Treat spaces before tabs and all kinds of trailing whitespace as an error.
 	# [default] trailing-space: looks for spaces at the end of a line
@@ -24,20 +24,28 @@
 	defaultBranch = main
 [help]
 	# Automatically correct and execute mistyped commands.
-	autocorrect = 1
+	# after 10 seconds
+	autocorrect = 100
+[credential]
+	helper = cache
+[grep]
+	patternType = perl
 [gpg]
 	format = ssh
 [branch]
 	# Show most recently changed branches first.
 	sort = -committerdate
-[apply]
-	# Detect whitespace errors when applying a patch.
-	whitespace = fix
+[pager]
+	# use pager for git status
+	status = true
 [commit]
+  template = ~/.config/git/message
   gpgsign = true
 	signoff = true
 [tag]
   gpgsign = true
+[rerere]
+	enable = true
 
 #******************
 #* MERGE AND DIFF *
@@ -46,17 +54,18 @@
   conflictStyle = zdiff3
   tool = vscode
 [mergetool.vscode]
-  cmd = 'code --wait $MERGED'
+  cmd = code --wait $MERGED
 
 [diff]
 	# Detect copies as well as renames.
 	renames = copies
+	# external = vscode
   tool = vscode
 [diff "bin"]
 	# Use `hexdump` to diff binary files.
 	textconv = hexdump -v -C
 [difftool.vscode]
-  cmd = 'code --wait --diff $LOCAL $REMOTE'
+  cmd = code --wait --diff $LOCAL $REMOTE
 
 #*****************
 #* PUSH AND PULL *
@@ -65,7 +74,9 @@
 	# https://git-scm.com/docs/git-config#git-config-pushdefault
 	default = simple
 	# Keep CLI push behavior aligned with VS Code's sync setting.
+	# don't push tags by the way
 	followTags = false
+	recurseSubmodules = on-demand
 [fetch]
 	# Match VS Code's prune-on-fetch behavior.
 	prune = true
@@ -77,6 +88,8 @@
 	autoStash = false
 [blame]
 	ignoreWhitespace = true
+[submodule]
+	recurse = true
 #******************
 #* URL SHORTHANDS *
 #******************
@@ -111,67 +124,13 @@
 	changed = green
 	untracked = cyan
 
-#*********
-#* ALIAS *
-#*********
-[alias]
-# View abbreviated SHA, description, and history graph of the latest 20 commits.
-	l = log --pretty=oneline -n 20 --graph --abbrev-commit
+[include]
+	path = alias
 
-	# View the current working tree status using the short format.
-	s = status -s
+# GitHub 用个人邮箱
+[includeIf "hasconfig:remote.*.url:https://github.com/**"]
+    path = ~/.gitconfig-personal
 
-	# Show the diff between the latest commit and the current state.
-	d = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
-
-	# `git di $number` shows the diff between the state `$number` revisions ago and the current state.
-	di = !"d() { git diff --patch-with-stat HEAD~$1; }; git diff-index --quiet HEAD -- || clear; d"
-
-	# Pull in remote changes for the current repository and all its submodules.
-	p = pull --recurse-submodules
-
-	# Clone a repository including all submodules.
-	c = clone --recursive
-
-	# Commit all changes.
-	ca = !git add ':(exclude,attr:builtin_objectmode=160000)' && git commit -av
-
-	# Switch to a branch, creating it if necessary.
-	go = "!f() { git checkout -b \"$1\" 2> /dev/null || git checkout \"$1\"; }; f"
-
-	# Show verbose output about tags, branches or remotes
-	tags = tag -l
-	branches = branch --all
-	remotes = remote --verbose
-
-	# List aliases.
-	aliases = config --get-regexp alias
-
-  # Interactive rebase with the given number of latest commits.
-	reb = "!r() { git rebase -i HEAD~$1; }; r"
-
-	# Remove the old tag with this name and tag the latest commit with it.
-	retag = "!r() { git tag -d $1 && git push origin :refs/tags/$1 && git tag $1; }; r"
-
-	# Find branches containing commit
-	fb = "!f() { git branch -a --contains $1; }; f"
-
-	# Find tags containing commit
-	ft = "!f() { git describe --always --contains $1; }; f"
-
-	# Find commits by source code
-	fc = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short -S$1; }; f"
-
-	# Find commits by commit message
-	fm = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short --grep=$1; }; f"
-
-	# Remove branches that have already been merged with main.
-	# a.k.a. ‘delete merged’
-	dm = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
-
-	no-edit = commit --amend --no-edit
-	conf = config --global --edit
-	tree = log --graph --oneline --all
-
-	# Show the user email for the current repository.
-	whoami = config user.email
+# 公司 GitLab 用公司邮箱
+[includeIf "hasconfig:remote.*.url:https://gitlab.company.com/**"]
+    path = ~/.gitconfig-work
