@@ -1,15 +1,14 @@
 # code: language=ini
-# Note: set this environment variable to debug git
-# GIT_TRACE=true
-# GIT_TRACE_SETUP =true
-# GIT_TRACE_PERFORMANCE=true
 [alias]
 	repo = clone --depth 1
 	w = worktree
 
 	# log
-	l = log --pretty=oneline --graph --abbrev-commit --no-merges
+	l = log --pretty=oneline --name-status --abbrev-commit --no-merges
 	la = log --all --pretty=oneline --graph --abbrev-commit --no-merges
+	# log filter
+	lf = log --pretty=oneline --name-status --abbrev-commit --no-merges --follow --diff-filter
+	lfollow = log --pretty=oneline --name-status --abbrev-commit --follow
 	# log conflicted commit messages
 	lm = log --oneline --left-right --merge
 	# REALLY usefule to find conflict commits
@@ -31,6 +30,7 @@
 
 	# show and status
 	s = status --short --branch
+	sh = show --summary --stat
 	sd = diff --stat --ignore-space-change
 	# what to be committed: diff between staged and the repo
 	sdd = diff --stat --ignore-space-change --staged
@@ -41,11 +41,11 @@
 	# show conflict files
 	sconflict = diff --name-only --diff-filter=U
 	# show base
-	sbase  = "!f() { git show :1:$1; }; f"
+	sbase  = "!f() { git show --color :1:$1; }; f"
 	# show ours
-	sours = "!f() { git show :2:$1; }; f"
+	sours = "!f() { git show --color :2:$1; }; f"
 	# show theirs
-	stheirs = "!f() { git show :3:$1; }; f"
+	stheirs = "!f() { git show --color :3:$1; }; f"
 	sb = branch --verbose
 	sbb = branch --verbose --all
 	# show merged branches
@@ -65,13 +65,12 @@
 	cemp = commit --allow-empty
 
 	# what modified: diff between working dir and staged
-	d = diff --ignore-space-change
+	d = diff --word--diff --ignore-space-change
 	# what to be committed: diff between staged and the repo
 	dd = diff --ignore-space-change --staged
 	# diff between
 	ddd = diff --ignore-space-change HEAD
 	dt = difftool
-	dw = diff --word-diff --ignore-space-change
 	# 对比两边的原始版本
 	dours = diff --ours
 	dtheirs = diff --theirs
@@ -150,16 +149,39 @@
 	lsconflict = ls-file --unmerged # -u
 	mergefile = merge-file -p # ours common theirs
 
-	; root = "!cd $(git rev-parse --show-toplevel)"
+	# root = "!cd $(git rev-parse --show-toplevel)"
 	root = rev-parse --show-toplevel
 	dir = rev-parse --show-prefix
 	is-shallow = rev-parse --is-shallow-repository
 	test-date = rev-parse --since
 
+	# GIT_TRACE=true
+	# GIT_TRACE_SETUP =true
+	# GIT_TRACE_PERFORMANCE=true
 
 	# Note: the difference between ls-tree and ls-files:
 		# ls-tree is applied to a specific commit or tree object
 		# ls-files is applied to the Index(the staged files)
+
+	memo = "!f() { \
+		local H='\\033[1;34m' G='\\033[1;32m' R='\\033[1;31m' Y='\\033[1;33m' M='\\033[1;35m' C='\\033[1;36m' W='\\033[1;37m' X='\\033[0m'; \
+		printf '%b%-60s%b\\n' \"$H\" '+----------+------------------------------------------------+' \"$X\"; \
+		printf '%b  %-8s    %-48s%b\\n' \"$H\" 'Letter' 'Meaning' \"$X\"; \
+		printf '%b%-60s%b\\n' \"$H\" '+----------+------------------------------------------------+' \"$X\"; \
+		printf '  %b%-8s%b    %-48s\\n' \"$G\" 'A' \"$X\" 'Added'; \
+		printf '  %b%-8s%b    %-48s\\n' \"$G\" 'C' \"$X\" 'Copied'; \
+		printf '  %b%-8s%b    %-48s\\n' \"$R\" 'D' \"$X\" 'Deleted'; \
+		printf '  %b%-8s%b    %-48s\\n' \"$Y\" 'M' \"$X\" 'Modified'; \
+		printf '  %b%-8s%b    %-48s\\n' \"$M\" 'R' \"$X\" 'Renamed'; \
+		printf '  %b%-8s%b    %-48s\\n' \"$C\" 'T' \"$X\" 'Type changed (File/Symlink/Submodule)'; \
+		printf '  %b%-8s%b    %-48s\\n' \"$R\" 'U' \"$X\" 'Unmerged (Conflict)'; \
+		printf '  %b%-8s%b    %-48s\\n' \"$W\" 'X' \"$X\" 'Unknown'; \
+		printf '  %b%-8s%b    %-48s\\n' \"$R\" 'B' \"$X\" 'Broken (Pairing)'; \
+		printf '%b%-60s%b\\n' \"$H\" '+----------+------------------------------------------------+' \"$X\"; \
+		printf '%b  1. can combine  2. * for (All-or-none)                   %b\\n' \"$C\" \"$X\"; \
+		printf '%b     3. lowercase for inverse selection                    %b\\n' \"$C\" \"$X\"; \
+		printf '%b%-60s%b\\n' \"$H\" '+----------+------------------------------------------------+' \"$X\"; \
+	}; f"
 
 	# Find branches containing commit
 	fb = "!f() { git branch -a --contains $1; }; f"
