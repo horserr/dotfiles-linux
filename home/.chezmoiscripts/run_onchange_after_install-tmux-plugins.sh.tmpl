@@ -1,0 +1,7 @@
+{{- /* code: language=shellscript */ -}}
+{{ if lookPath "tmux" -}}
+#!/bin/bash
+# tmux.conf hash: {{ include "dot_config/tmux/tmux.conf" | sha256sum }}
+# 确保 tmux 正在运行或在后台静默安装
+~/.tmux/plugins/tpm/bin/install_plugins
+{{ end -}}

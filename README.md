@@ -4,66 +4,13 @@
 
 This repo is adapted from: [twpayne's dotfiles](https://github.com/twpayne/dotfiles)
 
-> [!CAUTION]
->
-> only tested on Windows and Ubuntu24.04 LTS
-
 ## Initiation
 
-`git` should be installed
+set up in container
 
-1. create local share folder if needed
-
-   ```sh
-   mkdir -p ~/.local/share
-   cd ~/.local/share
-   ```
-
-2. clone the repo
-
-   ```sh
-   git clone --depth 1 https://github.com/horserr/dotfiles.git chezmoi
-   cd ./chezmoi/start
-   ```
-
-3. use scripts to install apps
-   - on linux:
-
-     ```bash
-     ./main.sh
-     ```
-
-   - on windows:
-
-     todo add set-executionpolicy
-
-     ```pwsh
-     ./main.ps1
-     ```
-
-4. reopen terminal
-
-5. (recommend) to use `neovim`, install `treesitter` beforehand
-
-   ```sh
-   sudo apt update
-   sudo apt install llvm-dev libclang-dev clang
-   cargo install tree-sitter-cli
-   ```
-   reopen the terminal and then enter `nvim`
-
-6. (recommend) install `nodejs` with `nvm`
-
-   ```sh
-   nvm install --lts
-   ```
-
-7. (recommend) install `fzf-fish` for fish shell
-
-   ```bash
-   # ensure_installed 'fisher' "curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher"
-   fisher install PatrickF1/fzf.fish
-   ```
+```sh
+sh -c "$(curl -fsLS https://get.chezmoi.io)" -- init --one-shot horserr/dotfiles-linux
+```
 
 ## (note) change apt source
 
@@ -109,10 +56,6 @@ sudo vim /etc/apt/sources.list.d/ubuntu.sources
 | 腾讯云 | https://mirrors.cloud.tencent.com/ubuntu/ |
 | 华为云 | https://mirrors.huaweicloud.com/ubuntu/ |
 
-```bash
-sudo apt update
-```
-
 ## chezmoi usage
 
 - 查看可用数据：chezmoi data
@@ -121,9 +64,6 @@ sudo apt update
 
 ## git
 
-`git checkout --orphan main`
-
-`git update-index --chmod=+x <file>`
 如果你想看看当前 Git 记录里，哪些文件是可执行的，可以运行：
 
 ```bash
