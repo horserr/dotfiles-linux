@@ -23,6 +23,12 @@
       "type": "shell",
       "command": "chezmoi init --source .",
       "detail": "reapply after changing chezmoi configuration"
+    },
+    {
+      "label": "refresh",
+      "type": "shell",
+      "command": "chezmoi --refresh-externals apply"
+      ,"detail": "force a refresh download archives"
     }
   ]
 }
