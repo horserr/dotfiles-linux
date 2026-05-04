@@ -1,3 +1,4 @@
+# fish_update_completions
 # WSL SSH Agent Bridge
 if status is-interactive; and string match -qi "*microsoft*" </proc/sys/kernel/osrelease
 

@@ -1,7 +1,17 @@
 # code: language=ini
 [alias]
-	repo = clone --depth 1
+	repo = clone --depth 1 --filter=blob:none --sparse
+	shallow-repo = clone --depth
+	partial-repo = clone --filter=blob:none --no-checkout
+	set-partial = "!f() { git config remote.$1.partialclonefilter blob:none; }; f"
 	w = worktree
+	# used for worktree sparse checkout
+	wemp = worktree add --no-checkout
+	# sparce checkout is similar to **view**
+	v = sparse-checkout
+	vdown = sparse-checkout disable
+
+	sub = submodule
 
 	# log
 	l = log --pretty=oneline --name-status --abbrev-commit --no-merges
@@ -148,6 +158,16 @@
 
 	conf = config --global --edit
 	confl = config --local --edit
+	confsub = config --file .gitmodules
+	conf-sparse = "!f() { \
+			if [ \"$(git config --get core.sparseCheckout)\" != \"true\" ]; then \
+					echo \"Error: Sparse-checkout is not enabled in this repository.\"; \
+					echo \"Run 'git sparse-checkout init' first.\"; \
+			else \
+				$(git var GIT_EDITOR) \"$(git rev-parse --git-path info/sparse-checkout)\" && git sparse-checkout reapply; \
+			fi; \
+	}; f"
+
 	whoami = config user.email
 
 	# plumbing commands
@@ -164,6 +184,7 @@
 	root = rev-parse --show-toplevel
 	dir = rev-parse --show-prefix
 	is-shallow = rev-parse --is-shallow-repository
+	is-sparse = "!f() { [ \"$(git config --get core.sparseCheckout)\" = \"true\" ] && echo \"True\" || echo \"False\"; }; f"
 	test-date = rev-parse --since
 	print-missing = rev-list --objects --missing=print
 

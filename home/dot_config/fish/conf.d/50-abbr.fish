@@ -1,4 +1,5 @@
 if status is-interactive
+    abbr -a g git
     abbr -a p printf
     # link: https://linuxize.com/post/how-to-find-files-in-linux-using-the-command-line/
     abbr -a f "find . -maxdepth 1"
