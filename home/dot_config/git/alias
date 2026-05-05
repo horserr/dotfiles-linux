@@ -65,7 +65,8 @@
 	cemp = commit --allow-empty
 
 	# what modified: diff between working dir and staged
-	d = diff --word--diff --ignore-space-change
+	d = diff --ignore-space-change
+	dw = diff --word--diff --ignore-space-change
 	# what to be committed: diff between staged and the repo
 	dd = diff --ignore-space-change --staged
 	# diff between
@@ -104,6 +105,8 @@
 	# jump = switch
 	j = switch
 	jc = switch --create
+	jd = switch --detach
+	jorphan = switch --orphan
 
   # k for keep, the sysnonym of stash
 	k = stash
@@ -154,6 +157,7 @@
 	dir = rev-parse --show-prefix
 	is-shallow = rev-parse --is-shallow-repository
 	test-date = rev-parse --since
+	print-missing = rev-list --objects --missing=print
 
 	# GIT_TRACE=true
 	# GIT_TRACE_SETUP =true
@@ -198,6 +202,7 @@
 	# git archive
 
 	############
+	# use `git var` to check git variable: git var GIT_EDITOR
 	# git reflog is equivalent to git log -g/--walk-reflogs --abbrev-commit --pretty=oneline
 	# git subtree
 	# git submodule
