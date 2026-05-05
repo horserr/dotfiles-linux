@@ -12,6 +12,12 @@
 	vdown = sparse-checkout disable
 
 	sub = submodule
+	# empty submodule without clone
+	subfor = submodule foreach
+	subemp = submodule add --no-checkout
+	subdiff = "!git diff && git submodule foreach 'git diff'"
+	subpush = push --recurse-submodules=on-demand
+	subupdate = submodule update --remote --merge
 
 	# log
 	l = log --pretty=oneline --name-status --abbrev-commit --no-merges
@@ -158,7 +164,15 @@
 
 	conf = config --global --edit
 	confl = config --local --edit
-	confsub = config --file .gitmodules
+	confsub = "!f() { \
+			MODFILE=\"$(git rev-parse --show-toplevel)/.gitmodules\"; \
+			if [ -f \"$MODFILE\" ]; then \
+				git config --edit --file \"$MODFILE\"; \
+			else \
+				echo \"❌ .gitmodules 文件不存在，跳过编辑\"; \
+			fi; \
+		}; f"
+
 	conf-sparse = "!f() { \
 			if [ \"$(git config --get core.sparseCheckout)\" != \"true\" ]; then \
 					echo \"Error: Sparse-checkout is not enabled in this repository.\"; \

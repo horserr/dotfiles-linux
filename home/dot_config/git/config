@@ -47,6 +47,9 @@
   gpgsign = true
 [rerere]
 	enable = true
+[status]
+	# show submodule summary when using git status
+	submodulesummary = true
 
 #******************
 #* MERGE AND DIFF *
@@ -63,6 +66,8 @@
 	renames = copies
 	# external = vscode
   tool = vscode
+	# show submodule log when using git diff
+	submodule = log
 [diff "bin"]
 	# Use `hexdump` to diff binary files.
 	textconv = hexdump -v -C
@@ -78,7 +83,8 @@
 	# Keep CLI push behavior aligned with VS Code's sync setting.
 	# don't push tags by the way
 	followTags = false
-	recurseSubmodules = on-demand
+	# recurseSubmodules = on-demand
+	recurseSubmodules = check
 [fetch]
 	# Match VS Code's prune-on-fetch behavior.
 	prune = true
@@ -93,7 +99,11 @@
 [blame]
 	ignoreWhitespace = true
 [submodule]
+	# Please refer to #file:refs/git_submodule_recurse_config.md for better illustration on why this setting is significant
+	# does not affect `git clone`
 	recurse = true
+	# auto detect fetch jobs
+	fetchJobs = 0
 #******************
 #* URL SHORTHANDS *
 #******************
