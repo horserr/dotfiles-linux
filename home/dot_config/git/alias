@@ -63,6 +63,8 @@
 	cam = commit --amend
 	cne = commit --amend --no-edit
 	cemp = commit --allow-empty
+	cfix = commit --fixup
+	csquash = commit --squash
 
 	# what modified: diff between working dir and staged
 	d = diff --ignore-space-change
@@ -93,6 +95,10 @@
   iaa = add --interactive
   # Interactive rebase with the given number of latest commits.
 	ir = rebase --interactive
+	# useful for orphan branch
+	irroot = rebase --interactive --root
+	# 1. 剪断侧枝， 2. 快速删除中间某些提交， 3.
+	ironto = rebase --interactive --onto
 	# interactive unstage
 	iu = reset --patch
 	# interactive stash
@@ -128,6 +134,8 @@
 	lost-found = fsck --lost-found
 	freeze = update-index --assume-unchanged
 	# todo
+	# git rebase (--continue|--skip|--abort|--quit|--edit-todo|--show-current-patch)
+	#  git rebase --show-current-patch, or its equivalent git show REBASE_HEAD
 	# continue = rebase --continue
 	# abort = rebase --abort
 
@@ -225,3 +233,7 @@
 # | Blob (文件)   | 存储项目规范、公钥、法务声明 | git show tag-name 直接看文档内容     |
 # | Tree (文件夹) | 记录某个瞬间的目录树快照     | 绕过提交历史，只保存文件结构         |
 # | Tag (标签)    | 给标签打标签（Nested Tag）   | 记录对某个发布版本的“二次背书”或审计 |
+
+# rebase tutorial: https://git-rebase.io/
+# sparse checkout: https://github.blog/open-source/git/bring-your-monorepo-down-to-size-with-sparse-checkout/
+# partial clone 介绍: https://help.aliyun.com/zh/yunxiao/user-guide/introduction-to-partial-clone

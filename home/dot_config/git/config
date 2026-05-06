@@ -54,6 +54,7 @@
 [merge]
   conflictStyle = zdiff3
   tool = vscode
+	autoStash = true
 [mergetool.vscode]
   cmd = code --wait $MERGED
 
@@ -85,8 +86,10 @@
 	# Match VS Code's rebase-when-sync behavior.
 	rebase = true
 [rebase]
-	# Keep rebases conservative unless explicitly requested.
-	autoStash = false
+	# autostash: Automatically create a temporary stash entry before the operation begins, and apply it after the operation ends. This means that you can run rebase on a dirty worktree. However, use with care: the final stash application after a successful rebase might result in non-trivial conflicts.
+	autoStash = true
+	# autosquash: When true, git rebase will automatically squash commits that begin with "squash!" or "fixup!" into the commit that they reference. This is useful for cleaning up commit history before merging a feature branch into the main branch.
+	autosquash = true
 [blame]
 	ignoreWhitespace = true
 [submodule]
