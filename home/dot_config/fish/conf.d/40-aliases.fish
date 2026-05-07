@@ -3,6 +3,13 @@ if status is-interactive
     alias conf '$EDITOR ~/.config/fish/config.fish'
     alias reload 'source ~/.config/fish/config.fish'
 
+    # Windows ClipBoard
+    if status is-interactive; and string match -qi "*microsoft*" </proc/sys/kernel/osrelease
+        alias clip clip.exe
+        alias get-clip "powershell.exe -c Get-Clipboard"
+    end
+
+
     if command -q eza
         alias ls 'eza --icons --group-directories-first'
         alias ll 'eza -lbgH --icons --git --group-directories-first'
