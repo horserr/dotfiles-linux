@@ -9,17 +9,6 @@ if status is-interactive
     # symbolic link dir
     abbr -a lnd "ln -sfd"
 
-    if command -q tmux
-        abbr -a t tmux new-session
-        abbr -a tt tmux new-session -s
-        abbr -a ta tmux attach
-        abbr -a tls tmux list-sessions
-        abbr -a tk tmux kill-session -t
-        abbr -a tkill tmux kill-server
-        abbr -a tmv tmux move-window -s -t
-        abbr -a tlsk tmux list-keys -N
-    end
-
     if command -q tldr
         abbr -a m tldr
     end
