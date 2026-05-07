@@ -75,6 +75,7 @@
 	b = blame -C -L
 
 	c = commit
+	cc = commit -m
 	ca = commit --all
 	cam = commit --amend
 	cne = commit --amend --no-edit
