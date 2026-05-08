@@ -31,15 +31,19 @@ if status is-interactive
         alias cat bat
     end
 
-    # yazi
-    function y
-        set tmp (mktemp -t "yazi-cwd.XXXXXX")
-        command yazi $argv --cwd-file="$tmp"
-        if read -z cwd <"$tmp"; and [ "$cwd" != "$PWD" ]; and test -d "$cwd"
-            builtin cd -- "$cwd"
+    if command -q yazi
+        abbr -a y yazi
+        # yazi
+        function ycd
+            set tmp (mktemp -t "yazi-cwd.XXXXXX")
+            command yazi $argv --cwd-file="$tmp"
+            if read -z cwd <"$tmp"; and [ "$cwd" != "$PWD" ]; and test -d "$cwd"
+                builtin cd -- "$cwd"
+            end
+            rm -f -- "$tmp"
         end
-        rm -f -- "$tmp"
     end
+
 end
 
 # find . -globstar -path "**/config/**/*.yaml"
