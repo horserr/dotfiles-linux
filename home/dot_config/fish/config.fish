@@ -24,10 +24,3 @@ if status is-interactive; and string match -qi "*microsoft*" </proc/sys/kernel/o
     end
 end
 
-if command -sq pixi
-    pixi completion --shell fish | source
-end
-
-if command -sq chezmoi
-chezmoi completion fish | source
-end

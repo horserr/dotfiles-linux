@@ -30,6 +30,9 @@ if status is-interactive
     if command -q bat
         alias cat bat
     end
+    if command -q batcat
+        alias cat batcat
+    end
 
     if command -q yazi
         abbr -a y yazi
