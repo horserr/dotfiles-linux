@@ -33,11 +33,11 @@
 	lfork = log --oneline --left-right HEAD...MERGE_HEAD
 
 	# git grep
-  g = grep --show-function --line-number  # -p
+  g = grep --show-function
   gcount = grep --count
 	# log pickaxe
-  # usage: git log -S ZLIB_BUF_MAX --oneline
-	p = log --pretty=oneline --abbrev-commit -S
+	p = log --stat --pretty=oneline --abbrev-commit -S
+	pR = log --reverse --pretty=oneline --abbrev-commit -S
 	pp = log --no-merges --stat --regexp-ignore-case -G
 	# log line: REALLY useful and amazing
   # usage: git log -L :git_deflate_bound:zlib.c
@@ -46,7 +46,7 @@
 
 	# show and status
 	s = status --short --branch
-	sh = show --summary --stat
+	sh = show --pretty=oneline --stat
 	sd = diff --stat --ignore-space-change
 	# what to be committed: diff between staged and the repo
 	sdd = diff --stat --ignore-space-change --staged
@@ -270,6 +270,9 @@
 # | Tree (文件夹) | 记录某个瞬间的目录树快照     | 绕过提交历史，只保存文件结构         |
 # | Tag (标签)    | 给标签打标签（Nested Tag）   | 记录对某个发布版本的“二次背书”或审计 |
 
+# git grep tutorial: https://laurynmm.github.io/2021/12/22/git-grep.html
+# advanced git grep tutorial: https://travisjeffery.com/search-a-git-repo-like-a-ninja/
+# git pickaxe blog: https://alexharri.com/blog/searching-and-navigating-git-commits
 # rebase tutorial: https://git-rebase.io/
 # sparse checkout: https://github.blog/open-source/git/bring-your-monorepo-down-to-size-with-sparse-checkout/
 # partial clone 介绍: https://help.aliyun.com/zh/yunxiao/user-guide/introduction-to-partial-clone
